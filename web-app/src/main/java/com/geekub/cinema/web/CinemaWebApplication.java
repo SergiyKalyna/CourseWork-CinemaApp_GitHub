@@ -9,6 +9,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 public class CinemaWebApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CinemaWebApplication.class, args);}
+        SpringApplication.run(CinemaWebApplication.class, args);
+
+    }
 }
 
