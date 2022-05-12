@@ -18,12 +18,9 @@
     <form th:method="POST" th:action="@{/events/add/{id}/(id=${movie.getId()})}" th:object="${event}">
 
         <div class="form-group my-3">
-
             <label  for="placeCost" class="form-label"> Cost of the place: </label>
-            <input type="text" th:field="*{placeCost}" id="placeCost" class="form-control is-invalid" placeholder="price value" aria-describedby="placeError" required/>
-            <div id="placeError" class="invalid-feedback">
-                Please provide a valid cost of the place.
-            </div>
+            <input type="number" th:field="*{placeCost}" id="placeCost" class="form-control" placeholder="price value"
+                   required min="50" max="300"/>
         </div>
 
         <div class="form-group my-3">
@@ -43,8 +40,8 @@
             <label for="time">Choose a time for event:</label>
 
             <input type="datetime-local" id="time"
-                   name="time" value="2022-05-10T19:00"
-                   min="2022-05-10T10:00" max="2022-12-31T00:00">
+                   name="time" th:value="${dateTimeNow}"
+                   th:min="${dateTimeNow}" max="2022-12-31T00:00" required>
         </div>
 
         <input type="submit" value="Add!" class="btn btn-primary"/>

@@ -15,14 +15,13 @@
         </div>
         <div class="form-group my-3">
             <label class="form" for="name"> Hall name: </label>
-            <input type="text" th:field="*{name}" id="name" class="form-control" required/>
+            <input type="text" th:field="*{name}" id="name" class="form-control"
+                   required minlength="6" maxlength="20"/>
         </div>
 
         <label for="capacity" class="form-label">Hall capacity:</label>
-        <input type="text" class="form-control is-invalid" id="capacity" aria-describedby="capacityEr" required>
-        <div id="capacityEr" class="invalid-feedback">
-            Please provide a valid hall capacity.
-        </div>
+        <input type="number" class="form-control" th:field="*{capacity}" id="capacity"
+               required min="30" max="100">
 
         <input type="submit" value="Add!" class="btn btn-primary"/>
         <br>

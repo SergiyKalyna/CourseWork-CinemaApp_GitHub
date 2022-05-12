@@ -12,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Controller
@@ -53,6 +55,10 @@ public class EventController {
     @GetMapping("/{id}/edit")
     @PreAuthorize("hasRole('ADMIN')")
     public String editEvent(@PathVariable("id") String id, Model model) {
+        LocalDateTime localDateTimeNow = LocalDateTime.of(LocalDate.now(),
+                LocalTime.of(LocalTime.now().getHour(),LocalTime.now().getMinute(),0));
+
+        model.addAttribute("dateTimeNow", localDateTimeNow);
         model.addAttribute("event", eventService.getEvent(Long.valueOf(id)));
         logger.info("Started operation of edit event with id - " + id);
 
@@ -87,8 +93,13 @@ public class EventController {
     @GetMapping("/create/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public String createEvent(@PathVariable("id") int movieId, Model model) {
+        LocalDateTime localDateTimeNow = LocalDateTime.of(LocalDate.now(),
+                LocalTime.of(LocalTime.now().getHour(),LocalTime.now().getMinute(),0));
+
         model.addAttribute("event", new Event());
         model.addAttribute("movie", movieService.show(movieId));
+        model.addAttribute("dateTimeNow", localDateTimeNow);
+
         logger.info("Started operation of create event to movie with id - " + movieId);
 
         return "event/create";

@@ -16,7 +16,8 @@
         <form>
             <div class="form-group my-3">
                 <label class="form" for="title"> Title: </label>
-                <input type="text" th:field="*{title}" id="title" class="form-control" required/>
+                <input type="text" th:field="*{title}" id="title" class="form-control"
+                       required minlength="3" maxlength="30"/>
             </div>
 
             <div class="form-row">
@@ -46,32 +47,35 @@
             <div class="form-group my-3">
                 <label for="actors">Starring:</label>
                 <textarea class="form-control" th:field="*{actors}" id="actors"
-                          placeholder="Input the actors of the movie" required></textarea>
+                          placeholder="Input the actors of the movie"
+                          required minlength="5" maxlength="200"></textarea>
             </div>
 
             <div class="form-group my-3">
                 <label for="trailer">Movie trailer:</label>
                 <textarea class="form-control" th:field="*{trailer}" id="trailer"
-                          placeholder="Input the link of the movie trailer" required></textarea>
+                          placeholder="Input the link of the movie trailer"
+                          required minlength="15" maxlength="100"></textarea>
             </div>
 
             <div class="form-group my-3">
                 <label for="release">Date of the release movie:</label>
                 <input type="date" id="release"
-                       name="release" value="2000-05-01"
-                       min="1990-01-01" max="2022-12-31">
+                       name="release" value="2022-05-01"
+                       min="1990-01-01" max="2022-12-31" required>
             </div>
 
             <div>
                 <label>Upload poster: </label>
-                <input type="file" name="image" accept="image/png, image/jpeg" class="form-control" />
+                <input type="file" name="image" accept="image/png, image/jpeg" class="form-control" required />
             </div>
 
             <div class="form-group my-3">
                 <label for="description">Description:</label>
                 <textarea class="form-control" th:field="*{description}" id="description"
-                          placeholder="Input the description of the movie" required></textarea>
-            </div>
+                          placeholder="Input the description of the movie"
+                         ></textarea>
+            </div> required minlength="30" maxlength="500"
             <input type="submit" value="Add!" class="btn btn-primary"/>
         </form>
         <a href="" th:href="@{/movies/}" class="btn btn-secondary my-5"><- Back to movies</a>

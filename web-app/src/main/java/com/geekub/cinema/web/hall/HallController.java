@@ -58,7 +58,6 @@ public class HallController {
     @PostMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
     public String addHall(@ModelAttribute("cinemaHall") CinemaHall cinemaHall) {
-
         cinemaHallService.addHall(cinemaHall);
 
         return "redirect:/halls";

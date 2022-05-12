@@ -14,12 +14,13 @@
         </div>
         <div class="form-group my-3">
             <label class="form" for="name"> Hall name: </label>
-            <input type="text" th:field="*{name}" id="name" class="form-control"/>
+            <input type="text" th:field="*{name}" id="name" class="form-control"
+                   required minlength="6" maxlength="20"/>
         </div>
-        <div class="form-group my-3">
-            <label class="form" for="capacity"> Hall capacity: </label>
-            <input type="text" th:field="*{capacity}" id="capacity" class="form-control"/>
-        </div>
+
+        <label for="capacity" class="form-label">Hall capacity:</label>
+        <input type="number" class="form-control" th:field="*{capacity}" id="capacity"
+               required min="30" max="100">
 
         <input type="submit" value="Update!" class="btn btn-primary"/>
         <br>

@@ -19,11 +19,13 @@
         </div>
         <div class="form-group my-3">
             <label class="form" for="firstName"> First name: </label>
-            <input type="text" th:field="*{firstName}" id="firstName" class="form-control"/>
+            <input type="text" th:field="*{firstName}" id="firstName" class="form-control"
+                   required minlength="3" maxlength="25"/>
         </div>
         <div class="form-group my-3">
             <label class="form" for="secondName"> Second name: </label>
-            <input type="text" th:field="*{secondName}" id="secondName" class="form-control"/>
+            <input type="text" th:field="*{secondName}" id="secondName" class="form-control"
+                   required minlength="3" maxlength="25"/>
         </div>
         <div class="form-group my-3">
             Role :
@@ -44,7 +46,7 @@
         <div class="form-group my-3">
             <label for="birthdayDate">Birthday date:</label>
             <input type="date" id="birthdayDate"
-                   name="birthdayDate" value="2000-05-01"
+                   name="birthdayDate" th:value="${user.getBirthdayDate()}"
                    min="1952-01-01" max="2012-01-01">
         </div>
 
@@ -68,7 +70,7 @@
         <br>
         <br>
         <br>
-        <a href="" th:href="@{/admin/profile}" class="btn btn-secondary"><- Return to profile</a>
+        <a href="" th:href="@{/admin/users}" class="btn btn-secondary"><- Return to admin panel</a>
     </form>
 </div>
 </body>
