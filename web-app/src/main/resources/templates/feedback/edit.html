@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit feedback</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <style>
+        .star-rating {
+            display: flex;
+            align-items: center;
+            width: 160px;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+            margin: 40px auto;
+            position: relative;
+        }
+
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating > label {
+            width: 30px;
+            height: 30px;
+            font-family: Arial;
+            font-size: 30px;
+            transition: 0.2s ease;
+            color: orange;
+        }
+
+        .star-rating label:hover {
+            color: #ff69b4;
+            transition: 0.2s ease;
+        }
+
+        .star-rating label:active::before {
+            transform: scale(1.1);
+        }
+
+
+        .star-rating label::before {
+            content: '\2606';
+            position: absolute;
+            top: 0px;
+            line-height: 26px;
+        }
+
+        .star-rating input:checked ~ label:before {
+            content: '\2605';
+        }
+
+        @-moz-document url-prefix() {
+            .star-rating input:checked ~ label:before {
+                font-size: 36px;
+                line-height: 21px;
+            }
+        }
+    </style>
+
+</head>
+<body>
+<div class="container">
+    <form th:method="POST" th:action="@{/feedback/update/{id}(id=${feedback.getId()})}" th:object="${feedback}">
+        <div style="text-align: center;">
+            <h1>Edit feedback form</h1>
+        </div>
+        <div class="form-group my-3">
+            <label for="feedback">Feedback:</label>
+            <textarea class="form-control" th:field="*{feedback}" id="feedback" required></textarea>
+        </div>
+
+        <div style="text-align: center;">Score:</div>
+        <div class="star-rating">
+            <input type="radio" name="stars" id="star-a" value="10"/>
+            <label for="star-a"></label>
+            <input type="radio" name="stars" id="star-b" value="9"/>
+            <label for="star-b"></label>
+            <input type="radio" name="stars" id="star-c" value="8"/>
+            <label for="star-c"></label>
+            <input type="radio" name="stars" id="star-d" value="7" checked/>
+            <label for="star-d"></label>
+            <input type="radio" name="stars" id="star-e" value="6"/>
+            <label for="star-e"></label>
+            <input type="radio" name="stars" id="star-f" value="5"/>
+            <label for="star-f"></label>
+            <input type="radio" name="stars" id="star-g" value="4"/>
+            <label for="star-g"></label>
+            <input type="radio" name="stars" id="star-h" value="3"/>
+            <label for="star-h"></label>
+            <input type="radio" name="stars" id="star-i" value="2"/>
+            <label for="star-i"></label>
+            <input type="radio" name="stars" id="star-k" value="1"/>
+            <label for="star-k"></label>
+        </div>
+
+        <input type="submit" value="Update!" class="btn btn-primary"/>
+    </form>
+</div>
+</body>
+</html>

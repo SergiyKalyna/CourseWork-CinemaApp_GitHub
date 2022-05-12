@@ -1,0 +1,4 @@
+rootProject.name = 'CourseWork-CinemaApp'
+include 'domain'
+include 'web-app'
+

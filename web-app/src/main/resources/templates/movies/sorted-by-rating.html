@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Sorted movie by rating</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <form th:if="${checkUserRights}" th:method="GET" th:action="@{/movies/create-movie}" class="my-3">
+                <input type="submit" value="Add movie" class="btn btn-primary"/>
+            </form>
+        </div>
+        <div class="col-4">
+            <div style="text-align: center;"><h1>Movies</h1></div>
+        </div>
+        <div class="col-4">
+            <form th:method="GET" th:action="@{/movies/search}" class="my-3">
+                <div class="input-group">
+                    <input name="keyword" placeholder="Search" class="form-control"/>
+                    <div class="input-group-append">
+                        <input type="submit" value="Search" class="btn btn-outline-primary"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-2">
+            <form th:method="GET" th:action="@{/movies/sorted-by-ASC-date}" class="my-3">
+                <input type="submit" value="Sorted by ASC date" class="btn btn-primary"/>
+            </form>
+        </div>
+        <div class="col-2">
+            <form th:method="GET" th:action="@{/movies/}" class="my-3">
+                <input type="submit" value="Sorted by DESC date" class="btn btn-primary"/>
+            </form>
+        </div>
+        <div class="col-2">
+            <form th:method="GET" th:action="@{/movies/sorted-by-rating}" class="my-3">
+                <input type="submit" value="Sorted by rating" class="btn btn-primary"/>
+            </form>
+        </div>
+        <div class="col-3">
+            <form th:method="GET" th:action="@{/movies/sorted-by-genre}" class="my-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label for="genre" class="input-group-text">Filter by genre:</label>
+                    </div>
+                    <select name="genre" id="genre" class="form-control">
+                        <option value="Horror">Horror</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Action">Action</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Thriller">Thriller</option>
+                        <option value="Detective">Detective</option>
+                        <option value="Cartoon">Cartoon</option>
+                        <option value="Fantasy">Fantasy</option>
+                    </select>
+                    <div class="input-group-append">
+                        <input type="submit" value="Filter" class="btn btn-primary"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-3">
+            <form th:method="GET" th:action="@{/movies/sorted-by-country}" class="my-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label for="country" class="input-group-text">Filter by country:</label>
+                    </div>
+                    <select name="country" id="country" class="form-control">
+                        <option value="USA">USA</option>
+                        <option value="Ukraine">Ukraine</option>
+                        <option value="Italy">Italy</option>
+                        <option value="Spain">Spain</option>
+                        <option value="France">France</option>
+                    </select>
+                    <div class="input-group-append">
+                        <input type="submit" value="Filter" class="btn btn-primary"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="movies">
+            <div class="container">
+                <div class="row">
+                    <div th:each="movie : ${movies}" class="col-md-4">
+                        <div class="album py-5 bg-light">
+                            <div style="text-align: center;">
+                                <div class="card mb-4 box-shadow">
+                                    <div style="text-align: center;">
+                                        <img th:src="@{${movie.photosImagePath}}" th:width="250" th:height="360"
+                                             style="max-width: 100%;"/>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text">
+                                            <a th:href="@{/movies/{id}(id=${movie.getId()})}"
+                                               th:text="${movie.getTitle()}">Title</a>
+                                            <br>
+                                        <td th:text="${movie.getRelease()}">Release</td>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-5">
+            <a href="" th:href="@{/menu/}" class="btn btn-secondary mt-5"><- Return to main menu</a>
+        </div>
+        <div class="col-3">
+            <footer style="font-size: large" class="panel-footer">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" th:if="${currentPage}>1"
+                                                 th:href="@{/movies/sorted-by-rating/{pageNumber}(pageNumber=${pageNumber}-1)}">Previous</a>
+                            &nbsp; &nbsp;
+                        </li>
+                <span th:each="pageNumber: ${#numbers.sequence(1, totalPages)}">
+                    <li class="page-item"><a class="page-link"
+                                             th:href="@{/movies/sorted-by-rating/{pageNumber}(pageNumber=${pageNumber})}">[[${pageNumber}]]</a>
+                 &nbsp; &nbsp;
+                    </li>
+                </span>
+                        <li class="page-item"><a class="page-link" th:if="${currentPage}<${totalPages}"
+                                                 th:href="@{/movies/sorted-by-rating/{pageNumber}(pageNumber=${currentPage}+1)}">Next</a>
+                            &nbsp; &nbsp;
+                        </li>
+                    </ul>
+                </nav>
+            </footer>
+        </div>
+    </div>
+</div>
+</body>
+</html>
