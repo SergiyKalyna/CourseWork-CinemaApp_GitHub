@@ -23,6 +23,7 @@ dependencies {
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.6.6'
 
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
 }
