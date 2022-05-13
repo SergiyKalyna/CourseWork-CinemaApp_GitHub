@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -85,11 +86,11 @@ public class EventService {
 
     public List<Event> findEventsByMovieId(int id) {
         List<Event> events = eventRepository.findEventsByMovieId(id);
+        List<Event> filteredEvents = events.stream().filter(event -> event.getFreePlace() > 1).collect(Collectors.toList());
 
-        events.stream().filter(event -> event.getFreePlace() == 0).forEach(events::remove);
         logger.info("Showed all events by movie with id -" + id);
 
-        return events;
+        return filteredEvents;
     }
 
     private boolean checkDuplicateEventByTime(Long id, LocalDateTime eventTime) {
