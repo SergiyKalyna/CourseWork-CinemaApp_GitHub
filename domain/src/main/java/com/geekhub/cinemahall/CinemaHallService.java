@@ -42,11 +42,12 @@ public class CinemaHallService {
     }
 
     public int getHallPlaces(int hallId) {
-        if (cinemaHallRepository.getById(hallId) == null) {
+        CinemaHall cinemaHall = cinemaHallRepository.getById(hallId);
+        if ( cinemaHall== null) {
             throw new CinemaHallNotFoundException(hallId);
         }
         logger.info("Showed hall capacity");
-        return getHall(hallId).getCapacity();
+        return cinemaHall.getCapacity();
     }
 
     public void deleteHall(int id) {
