@@ -34,34 +34,6 @@ class EventServiceTest {
     EventService eventService;
 
     @Test
-    void delete_check_isPresent_event() {
-        Event event = new Event();
-        when(eventRepository.getEvent(1L)).thenReturn(event);
-
-        eventService.deleteEvent(1L);
-
-        verify(eventRepository).getEvent(1L);
-    }
-
-    @Test
-    void delete_when_event_not_found() {
-        Event event = null;
-        when(eventRepository.getEvent(1L)).thenReturn(event);
-
-        assertThrows(EventNotFoundException.class, () -> eventService.deleteEvent(1L));
-    }
-
-    @Test
-    void delete_check_call_method() {
-        Event event = new Event();
-        when(eventRepository.getEvent(1L)).thenReturn(event);
-
-        eventService.deleteEvent(1L);
-
-        verify(eventRepository).delete(1L);
-    }
-
-    @Test
     void add_when_time_is_null() {
         Event event = new Event(1L, null, 1, 1, 40, 100);
 
@@ -141,6 +113,34 @@ class EventServiceTest {
         eventService.addEvent(event);
 
         assertDoesNotThrow(() -> eventService.addEvent(event));
+    }
+
+    @Test
+    void delete_check_isPresent_event() {
+        Event event = new Event();
+        when(eventRepository.getEvent(1L)).thenReturn(event);
+
+        eventService.deleteEvent(1L);
+
+        verify(eventRepository).getEvent(1L);
+    }
+
+    @Test
+    void delete_when_event_not_found() {
+        Event event = null;
+        when(eventRepository.getEvent(1L)).thenReturn(event);
+
+        assertThrows(EventNotFoundException.class, () -> eventService.deleteEvent(1L));
+    }
+
+    @Test
+    void delete_check_call_method() {
+        Event event = new Event();
+        when(eventRepository.getEvent(1L)).thenReturn(event);
+
+        eventService.deleteEvent(1L);
+
+        verify(eventRepository).delete(1L);
     }
 
     @Test

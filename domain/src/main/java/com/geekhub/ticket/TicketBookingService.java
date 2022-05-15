@@ -62,7 +62,7 @@ public class TicketBookingService {
     }
 
     public void downloadTicket(Long id) {
-        Ticket ticket = getTicket(id);
+        Ticket ticket = ticketBookingRepository.getById(id);
         if (ticket == null) {
             throw new TicketNotFoundException(id);
         }

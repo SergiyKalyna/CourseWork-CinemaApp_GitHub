@@ -24,6 +24,49 @@ class CinemaHallServiceTest {
     CinemaHallService cinemaHallService;
 
     @Test
+    void add_cinema_hall_when_name_is_null() {
+        CinemaHall hall = new CinemaHall(1, null, 60);
+
+        assertThrows(ValidationException.class, () -> cinemaHallService.addHall(hall));
+    }
+
+    @Test
+    void add_cinema_hall_when_name_is_empty() {
+        CinemaHall hall = new CinemaHall(1, "", 60);
+
+        assertThrows(ValidationException.class, () -> cinemaHallService.addHall(hall));
+    }
+
+    @Test
+    void add_cinema_hall_when_capacity_less_than_0() {
+        CinemaHall hall = new CinemaHall(1, "Name", -1);
+
+        assertThrows(ValidationException.class, () -> cinemaHallService.addHall(hall));
+    }
+
+    @Test
+    void add_cinema_hall_when_capacity_is_0() {
+        CinemaHall hall = new CinemaHall(1, "Name", 0);
+
+        assertThrows(ValidationException.class, () -> cinemaHallService.addHall(hall));
+    }
+
+    @Test
+    void add_cinema_hall_call_method() {
+        CinemaHall hall = new CinemaHall(1, "Name", 30);
+        cinemaHallService.addHall(hall);
+
+        verify(cinemaHallRepository).add(hall);
+    }
+
+    @Test
+    void add_cinema_hall_when_valid_fields() {
+        CinemaHall hall = new CinemaHall(1, "Name", 30);
+
+        assertDoesNotThrow(() -> cinemaHallService.addHall(hall));
+    }
+
+    @Test
     void getHall_check_when_input_number_less_than_0() {
         assertThrows(CinemaHallNotFoundException.class, () -> cinemaHallService.getHall(-1));
     }
@@ -163,49 +206,6 @@ class CinemaHallServiceTest {
         int actualCapacity = cinemaHallService.getHallPlaces(1);
 
         assertEquals(60, actualCapacity);
-    }
-
-    @Test
-    void add_cinema_hall_when_name_is_null() {
-        CinemaHall hall = new CinemaHall(1, null, 60);
-
-        assertThrows(ValidationException.class, () -> cinemaHallService.addHall(hall));
-    }
-
-    @Test
-    void add_cinema_hall_when_name_is_empty() {
-        CinemaHall hall = new CinemaHall(1, "", 60);
-
-        assertThrows(ValidationException.class, () -> cinemaHallService.addHall(hall));
-    }
-
-    @Test
-    void add_cinema_hall_when_capacity_less_than_0() {
-        CinemaHall hall = new CinemaHall(1, "Name", -1);
-
-        assertThrows(ValidationException.class, () -> cinemaHallService.addHall(hall));
-    }
-
-    @Test
-    void add_cinema_hall_when_capacity_is_0() {
-        CinemaHall hall = new CinemaHall(1, "Name", 0);
-
-        assertThrows(ValidationException.class, () -> cinemaHallService.addHall(hall));
-    }
-
-    @Test
-    void add_cinema_hall_call_method() {
-        CinemaHall hall = new CinemaHall(1, "Name", 30);
-        cinemaHallService.addHall(hall);
-
-        verify(cinemaHallRepository).add(hall);
-    }
-
-    @Test
-    void add_cinema_hall_when_valid_fields() {
-        CinemaHall hall = new CinemaHall(1, "Name", 30);
-
-        assertDoesNotThrow(() -> cinemaHallService.addHall(hall));
     }
 
     @Test

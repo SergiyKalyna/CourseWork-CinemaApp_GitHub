@@ -7,7 +7,6 @@ import com.geekhub.exception.WrongPasswordException;
 import com.geekhub.models.Role;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
@@ -75,16 +74,6 @@ public class UserService {
         userRepository.updateUser(id, user);
 
         logger.info("Was updated user with id -" + id);
-    }
-
-    public User findUserByUsername(String login) throws UsernameNotFoundException {
-        User user = userRepository.findByLogin(login);
-        if (user == null) {
-            throw new UserNotFoundException(login);
-        }
-        logger.info("Was found user with login -" + login);
-
-        return user;
     }
 
     public void changePassword(Long userId, String oldPassword, String newPassword) {
