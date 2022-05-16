@@ -20,9 +20,10 @@ public class DataBaseConfig {
     @Bean
     public DataSource dataSource(@Value("${jdbc.url}") String url,
                                  @Value("${jdbc.login}") String username,
-                                 @Value("${jdbc.password}") String password) {
+                                 @Value("${jdbc.password}") String password,
+                                 @Value("${jdbc.driver}") String driver) {
         final HikariConfig config = new HikariConfig();
-        config.setDriverClassName("org.postgresql.Driver");
+        config.setDriverClassName(driver);
         config.setJdbcUrl(url);
         config.setUsername(username);
         config.setPassword(password);
