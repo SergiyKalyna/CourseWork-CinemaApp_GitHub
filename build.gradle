@@ -27,7 +27,11 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.6.6'
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.6.6'
 
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
 }
 
 test {

@@ -20,6 +20,7 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.6.6'
 
     implementation group: 'commons-validator', name: 'commons-validator', version: '1.7'
+    implementation 'junit:junit:4.13.1'
 
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.6.6'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
@@ -29,7 +30,13 @@ dependencies {
 
     runtimeOnly 'com.h2database:h2'
 
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
+//    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
+
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
 }
 
 test {
