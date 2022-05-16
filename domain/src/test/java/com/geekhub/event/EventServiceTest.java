@@ -92,6 +92,32 @@ class EventServiceTest {
     }
 
     @Test
+    void add_when_event_is_overlap_with_another_event_for_2hoursPlus() {
+        Event event1 = new Event(1L, LocalDateTime.now(), 1, 1, 40, 100);
+        Event event2 = new Event(2L, LocalDateTime.now().plusHours(2), 1, 1, 40, 100);
+        List<Event> eventList = List.of(event1, event2);
+        CinemaHall cinemaHall = new CinemaHall();
+
+        when(cinemaHallService.getHall(event1.getCinemaHallId())).thenReturn(cinemaHall);
+        when(eventRepository.getAllByDateTime(event1.getTime())).thenReturn(eventList);
+
+        assertThrows(CreateEventException.class, () -> eventService.addEvent(event1));
+    }
+
+    @Test
+    void add_when_event_is_overlap_with_another_event_for_2hoursMinus() {
+        Event event1 = new Event(1L, LocalDateTime.now(), 1, 1, 40, 100);
+        Event event2 = new Event(2L, LocalDateTime.now().minusHours(2), 1, 1, 40, 100);
+        List<Event> eventList = List.of(event1, event2);
+        CinemaHall cinemaHall = new CinemaHall();
+
+        when(cinemaHallService.getHall(event1.getCinemaHallId())).thenReturn(cinemaHall);
+        when(eventRepository.getAllByDateTime(event1.getTime())).thenReturn(eventList);
+
+        assertThrows(CreateEventException.class, () -> eventService.addEvent(event1));
+    }
+
+    @Test
     void add_call_repository_method() {
         Event event = new Event(1L, LocalDateTime.now(), 1, 1, 40, 100);
         CinemaHall cinemaHall = new CinemaHall();
@@ -161,7 +187,7 @@ class EventServiceTest {
     }
 
     @Test
-    void getLecture_check_call_method() {
+    void getEvent_check_call_method() {
         Event event = new Event();
         when(eventRepository.getEvent(1L)).thenReturn(event);
 
@@ -171,7 +197,7 @@ class EventServiceTest {
     }
 
     @Test
-    void getLecture_check_equals_return_object() {
+    void getEvent_check_equals_return_object() {
         Event expected = new Event(1L, LocalDateTime.now(), 1, 1, 40, 100);
         when(eventRepository.getEvent(1L)).thenReturn(expected);
 
@@ -181,7 +207,7 @@ class EventServiceTest {
     }
 
     @Test
-    void getLecture_check_that_method_return_not_null() {
+    void getEvent_check_that_method_return_not_null() {
         Event expected = new Event(1L, LocalDateTime.now(), 1, 1, 40, 100);
         when(eventRepository.getEvent(1L)).thenReturn(expected);
 
@@ -435,7 +461,7 @@ class EventServiceTest {
     }
 
     @Test
-    void update_when_not_overlaps_event() {
+    void update_when_event_overlap_with_thisEvent() {
         Event event = new Event(1L, LocalDateTime.now(), 1, 1, 40, 100);
         List<Event> eventList = List.of(event);
         CinemaHall cinemaHall = new CinemaHall();
@@ -445,6 +471,47 @@ class EventServiceTest {
         when(eventRepository.getEvent(1L)).thenReturn(event);
 
         assertDoesNotThrow(() -> eventService.updateEvent(1L, event));
+    }
+
+    @Test
+    void update_when_not_overlaps_event() {
+        Event event = new Event(1L, LocalDateTime.now(), 1, 1, 40, 100);
+        List<Event> eventList = Collections.emptyList();
+        CinemaHall cinemaHall = new CinemaHall();
+
+        when(cinemaHallService.getHall(event.getCinemaHallId())).thenReturn(cinemaHall);
+        when(eventRepository.getAllByDateTime(event.getTime())).thenReturn(eventList);
+        when(eventRepository.getEvent(1L)).thenReturn(event);
+
+        assertDoesNotThrow(() -> eventService.updateEvent(1L, event));
+    }
+
+    @Test
+    void update_when_event_is_overlap_with_another_event_for_2hoursPlus() {
+        Event event1 = new Event(1L, LocalDateTime.now(), 1, 1, 40, 100);
+        Event event2 = new Event(2L, LocalDateTime.now().plusHours(2), 1, 1, 40, 100);
+        List<Event> eventList = List.of(event1, event2);
+        CinemaHall cinemaHall = new CinemaHall();
+
+        when(eventRepository.getEvent(1L)).thenReturn(event1);
+        when(cinemaHallService.getHall(event1.getCinemaHallId())).thenReturn(cinemaHall);
+        when(eventRepository.getAllByDateTime(event1.getTime())).thenReturn(eventList);
+
+        assertThrows(CreateEventException.class, () -> eventService.updateEvent(1L, event1));
+    }
+
+    @Test
+    void update_when_event_is_overlap_with_another_event_for_2hoursMinus() {
+        Event event1 = new Event(1L, LocalDateTime.now(), 1, 1, 40, 100);
+        Event event2 = new Event(2L, LocalDateTime.now().minusHours(2), 1, 1, 40, 100);
+        List<Event> eventList = List.of(event1, event2);
+        CinemaHall cinemaHall = new CinemaHall();
+
+        when(eventRepository.getEvent(1L)).thenReturn(event1);
+        when(cinemaHallService.getHall(event1.getCinemaHallId())).thenReturn(cinemaHall);
+        when(eventRepository.getAllByDateTime(event1.getTime())).thenReturn(eventList);
+
+        assertThrows(CreateEventException.class, () -> eventService.updateEvent(1L, event1));
     }
 
     @Test

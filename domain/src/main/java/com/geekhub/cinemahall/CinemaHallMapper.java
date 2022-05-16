@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@Component
 public class CinemaHallMapper implements RowMapper<CinemaHall> {
     @Override
     public CinemaHall mapRow(ResultSet rs, int rowNum) throws SQLException {

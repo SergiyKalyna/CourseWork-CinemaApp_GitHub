@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-@Repository
+
 public class CinemaHallRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
