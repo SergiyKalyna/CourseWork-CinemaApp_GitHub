@@ -4,10 +4,11 @@ import com.geekhub.exception.CinemaHallNotFoundException;
 import com.geekhub.exception.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class CinemaHallService {
 
     private static final Logger logger = LoggerFactory.getLogger(CinemaHallService.class);

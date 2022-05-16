@@ -26,7 +26,7 @@ class FileUploadUtilTest {
         LocalDate date = LocalDate.now();
         String title = "title";
 
-        String expectedName = date.toString() + "_" + title + ".jpg";
+        String expectedName = date + "_" + title + ".jpg";
 
         when(multipartFile.getOriginalFilename()).thenReturn("1.jpg");
         String actualName = fileUploadUtil.getNewImageName(date, title, multipartFile);
@@ -39,7 +39,7 @@ class FileUploadUtilTest {
         LocalDate date = LocalDate.now();
         String title = "title";
 
-        String expectedName = date.toString() + "_" + title + ".jpg";
+        String expectedName = date + "_" + title + ".jpg";
 
         when(multipartFile.getOriginalFilename()).thenReturn("1.jpg");
         String actualName = fileUploadUtil.getNewImageName(date, title, multipartFile);
