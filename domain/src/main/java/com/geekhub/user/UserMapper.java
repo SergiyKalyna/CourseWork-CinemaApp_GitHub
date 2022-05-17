@@ -46,12 +46,6 @@ public class UserMapper implements RowMapper<User> {
                 .addValue("birthday_date", String.valueOf(user.getBirthdayDate()));
     }
 
-    public MapSqlParameterSource getParametersForUpdateRole(Long id, Role role) {
-        return new MapSqlParameterSource(
-                "id", id)
-                .addValue("role", String.valueOf(role));
-    }
-
     public MapSqlParameterSource getParametersForChangePassword(Long id, String password) {
         return new MapSqlParameterSource(
                 "id", id)

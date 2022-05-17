@@ -48,7 +48,7 @@ class TicketBookingRepositoryTest {
     }
 
     @Test
-    void nothing_happened_when_trying_to_delete_not_existing_feedback() {
+    void nothing_happened_when_trying_to_delete_not_existing_ticket() {
         assertThatCode(() -> ticketBookingRepository.deleteTicket(1L))
                 .doesNotThrowAnyException();
     }
