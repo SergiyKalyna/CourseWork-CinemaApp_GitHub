@@ -220,6 +220,12 @@ public class MovieController {
         movie.setActors(List.of(actors));
 
         if (!multipartFile.isEmpty()) {
+//            byte[] uploadImageBytes;
+//            try {
+//                uploadImageBytes = multipartFile.getBytes();
+//            } catch (IOException e){
+//                logger.error("Convert image to byte was failed");
+//            }
             String newFileName = fileUploadUtil.getNewImageName(movie.getRelease(), movie.getTitle(), multipartFile);
             movie.setImageName(newFileName);
             fileUploadUtil.saveFile(newFileName, multipartFile);
@@ -235,7 +241,7 @@ public class MovieController {
         long totalItems = moviePages.getTotalElements();
         List<Movie> movies = moviePages.getContent();
 
-        if(currentPage>totalPages||currentPage<=0){
+        if (currentPage > totalPages || currentPage <= 0) {
             throw new MovieNotFoundException("Page index must not be more than total pages!");
         }
 
