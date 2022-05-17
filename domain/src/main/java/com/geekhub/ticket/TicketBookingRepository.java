@@ -23,17 +23,17 @@ public class TicketBookingRepository {
 
     public List<Ticket> getByUserId(Long id) {
         return jdbcTemplate.query("SELECT * FROM ticket WHERE user_id= :id ORDER BY time DESC",
-                new MapSqlParameterSource("id", id), ticketMapper)
+                        new MapSqlParameterSource("id", id), ticketMapper)
                 .stream()
                 .toList();
     }
 
     public Ticket getById(Long id) {
         return jdbcTemplate.query("SELECT * FROM ticket WHERE id= :id",
-                new MapSqlParameterSource("id", id), ticketMapper)
+                        new MapSqlParameterSource("id", id), ticketMapper)
                 .stream()
                 .findAny()
-                .orElseThrow(()-> new TicketNotFoundException(id));
+                .orElseThrow(() -> new TicketNotFoundException(id));
     }
 
     public void createTicked(Ticket ticket) {
@@ -45,5 +45,11 @@ public class TicketBookingRepository {
     public void deleteTicketByEventId(Long eventId) {
         jdbcTemplate.update("DELETE FROM ticket WHERE event_id= :event_id",
                 new MapSqlParameterSource("event_id", eventId));
+    }
+
+    public List<Ticket> getAll() {
+        return jdbcTemplate.query("SELECT * FROM ticket ORDER BY time DESC", ticketMapper)
+                .stream()
+                .toList();
     }
 }
