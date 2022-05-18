@@ -9,8 +9,8 @@ import com.geekhub.event.EventService;
 import com.geekhub.feedback.FeedbackMapper;
 import com.geekhub.feedback.FeedbackRepository;
 import com.geekhub.feedback.FeedbackService;
-import com.geekhub.movie.MovieRowMapper;
 import com.geekhub.movie.MovieRepository;
+import com.geekhub.movie.MovieRowMapper;
 import com.geekhub.movie.MovieService;
 import com.geekhub.ticket.TicketBookingRepository;
 import com.geekhub.ticket.TicketBookingService;
@@ -18,7 +18,6 @@ import com.geekhub.ticket.TicketMapper;
 import com.geekhub.user.UserMapper;
 import com.geekhub.user.UserRepository;
 import com.geekhub.user.UserService;
-import com.geekhub.util.FileUploadUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -115,10 +114,5 @@ public class AppConfig {
     @Bean
     public UserService userService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         return new UserService(userRepository, bCryptPasswordEncoder);
-    }
-
-    @Bean
-    public FileUploadUtil fileUploadUtil (){
-        return new FileUploadUtil();
     }
 }

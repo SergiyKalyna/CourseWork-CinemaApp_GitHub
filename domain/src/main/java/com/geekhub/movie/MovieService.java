@@ -105,6 +105,14 @@ public class MovieService {
         return movieRepository.showAllLastMovie();
     }
 
+    public byte[] getImageBytes(int movieId){
+        if (movieRepository.show(movieId) == null) {
+            throw new MovieNotFoundException(movieId);
+        }
+
+        return movieRepository.getImage(movieId);
+    }
+
     private Page<Movie> showMoviesPage(Pageable pageable, List<Movie> movies) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
@@ -133,7 +141,7 @@ public class MovieService {
             throw new ValidationException("Was not to inputted releases country of the movie");
         } else if (movie.getRelease() == null) {
             throw new ValidationException("Was not to inputted date of the release movie");
-        } else if (movie.getImage().length < 1) {
+        } else if (movie.getImage() == null) {
             throw new ValidationException("Was not to inputted image of the movie");
         } else if (movie.getTrailer() == null || movie.getTrailer().isBlank() || !checkValidUrl(movie.getTrailer())) {
             throw new ValidationException("Was not to inputted link on the trailer of the movie or input link is invalid");

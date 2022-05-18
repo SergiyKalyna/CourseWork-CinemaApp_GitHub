@@ -4,7 +4,6 @@ import com.geekhub.models.Gender;
 import com.geekhub.models.Role;
 import com.geekhub.user.User;
 import com.geekhub.user.UserService;
-import com.geekhub.util.FileUploadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,7 +17,7 @@ import java.util.Locale;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-    private static final Logger logger = LoggerFactory.getLogger(FileUploadUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
     private final UserService userService;
 

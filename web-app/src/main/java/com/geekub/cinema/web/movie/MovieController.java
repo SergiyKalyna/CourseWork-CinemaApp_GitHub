@@ -10,7 +10,6 @@ import com.geekhub.models.Role;
 import com.geekhub.movie.Movie;
 import com.geekhub.movie.MovieService;
 import com.geekhub.user.User;
-import com.geekhub.util.FileUploadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -34,12 +33,10 @@ public class MovieController {
 
     private final MovieService movieService;
     private final FeedbackService feedbackService;
-    private final FileUploadUtil fileUploadUtil;
 
-    public MovieController(MovieService movieService, FeedbackService feedbackService, FileUploadUtil fileUploadUtil) {
+    public MovieController(MovieService movieService, FeedbackService feedbackService) {
         this.movieService = movieService;
         this.feedbackService = feedbackService;
-        this.fileUploadUtil = fileUploadUtil;
     }
 
     @GetMapping()
@@ -105,6 +102,9 @@ public class MovieController {
         Movie movie = movieService.show(id);
         setMovieParams(title, description, release, country, genre, actors, trailerLink, multipartFile, movie);
 
+        if (movie.getImage() == null) {
+            movie.setImage(movieService.getImageBytes(id));
+        }
         movieService.update(id, movie);
 
         return "redirect:/movies/" + id;
@@ -224,7 +224,7 @@ public class MovieController {
             try {
                 uploadImageBytes = multipartFile.getBytes();
                 movie.setImage(uploadImageBytes);
-            } catch (IOException e){
+            } catch (IOException e) {
                 logger.error("Convert image to byte was failed");
             }
         }

@@ -11,20 +11,6 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class MovieRowMapper implements RowMapper<Movie> {
-//    @Override
-//    public Movie mapRow(ResultSet rs, int rowNum) throws SQLException {
-//        return new Movie(
-//                rs.getInt("id"),
-//                rs.getString("title"),
-//                Genre.valueOf((rs.getString("genre")).toUpperCase(Locale.ROOT)),
-//                rs.getString("description"),
-//                LocalDate.parse(rs.getString("release")),
-//                Production.valueOf((rs.getString("production")).toUpperCase(Locale.ROOT)),
-//                List.of(rs.getString("actors")),
-//                rs.getString("image_name"),
-//                rs.getString("trailer"),
-//                rs.getInt("rating"));
-//    }
 
     @Override
     public Movie mapRow(ResultSet rs, int rowNum) throws SQLException {
