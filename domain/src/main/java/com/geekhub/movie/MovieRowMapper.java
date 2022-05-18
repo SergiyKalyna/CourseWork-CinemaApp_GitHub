@@ -25,7 +25,8 @@ public class MovieRowMapper implements RowMapper<Movie> {
                 List.of(rs.getString("actors")),
                 Base64.getEncoder().encodeToString(image),
                 rs.getString("trailer"),
-                rs.getInt("rating"));
+                rs.getInt("rating"),
+                image);
     }
 
     public MapSqlParameterSource getParametersForCreate(Movie movie) {

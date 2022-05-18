@@ -4,7 +4,6 @@ import com.geekhub.models.Genre;
 import com.geekhub.models.Production;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Transient;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -25,6 +24,20 @@ public class Movie {
     private byte[] image;
 
     public Movie() {
+    }
+
+    public Movie(int id, String title, Genre genre, String description, LocalDate release, Production country, List<String> actors, String imageFile, String trailer, int averageRating, byte[] image) {
+        this.id = id;
+        this.title = title;
+        this.genre = genre;
+        this.description = description;
+        this.release = release;
+        this.country = country;
+        this.actors = actors;
+        this.imageFile = imageFile;
+        this.trailer = trailer;
+        this.averageRating = averageRating;
+        this.image = image;
     }
 
     public Movie(int id, String title, Genre genre, String description, LocalDate release, Production country, List<String> actors, String imageFile, String trailer, int averageRating) {
@@ -51,10 +64,5 @@ public class Movie {
         this.trailer = trailer;
         this.averageRating = averageRating;
         this.image = image;
-    }
-
-    @Transient
-    public String getPhotosImagePath() {
-        return "/web-app/src/main/resources/static/images/" + imageFile;
     }
 }

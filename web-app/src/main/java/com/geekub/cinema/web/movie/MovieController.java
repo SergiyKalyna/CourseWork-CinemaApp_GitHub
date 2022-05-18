@@ -102,9 +102,6 @@ public class MovieController {
         Movie movie = movieService.show(id);
         setMovieParams(title, description, release, country, genre, actors, trailerLink, multipartFile, movie);
 
-        if (movie.getImage() == null) {
-            movie.setImage(movieService.getImageBytes(id));
-        }
         movieService.update(id, movie);
 
         return "redirect:/movies/" + id;
