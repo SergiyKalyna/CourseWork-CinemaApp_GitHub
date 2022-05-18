@@ -62,7 +62,7 @@ class MovieRepositoryTest {
         assertThat(movieRepository.showAll().size()).isEqualTo(0);
 
         Movie movie = new Movie(1, "title", Genre.COMEDY, "description", LocalDate.now(),
-                Production.USA, List.of("actors"), "image", "trailer", 1);
+                Production.USA, List.of("actors"), "trailer", 1, new byte[100]);
 
         movieRepository.create(movie);
 
@@ -75,9 +75,9 @@ class MovieRepositoryTest {
         assertThat(movieRepository.showAll().size()).isEqualTo(0);
 
         Movie movie1 = new Movie(1, "title", Genre.COMEDY, "description", LocalDate.now(),
-                Production.USA, List.of("actors"), "image", "trailer", 1);
+                Production.USA, List.of("actors"), "trailer", 1, new byte[100]);
         Movie movie2 = new Movie(2, "title", Genre.COMEDY, "description", LocalDate.now(),
-                Production.USA, List.of("actors"), "image", "trailer", 1);
+                Production.USA, List.of("actors"), "trailer", 1, new byte[100]);
 
         movieRepository.create(movie1);
         movieRepository.create(movie2);
@@ -94,7 +94,7 @@ class MovieRepositoryTest {
     @DirtiesContext
     void check_return_right_movie() {
         Movie movie = new Movie(9, "title", Genre.COMEDY, "description", LocalDate.now(),
-                Production.USA, List.of("actors"), "image", "trailer", 1);
+                Production.USA, List.of("actors"), "trailer", 1, new byte[100]);
 
         movieRepository.create(movie);
 
@@ -110,7 +110,7 @@ class MovieRepositoryTest {
         assertThat(movieRepository.showAll().size()).isEqualTo(0);
 
         Movie movie = new Movie(9, "title", Genre.COMEDY, "description", LocalDate.now(),
-                Production.USA, List.of("actors"), "image", "trailer", 1);
+                Production.USA, List.of("actors"), "trailer", 1, new byte[100]);
 
         movieRepository.create(movie);
         assertThat(movieRepository.showAll().size()).isEqualTo(1);
@@ -123,7 +123,7 @@ class MovieRepositoryTest {
     @DirtiesContext
     void check_result_update_method() {
         Movie movie = new Movie(9, "title", Genre.COMEDY, "description", LocalDate.now(),
-                Production.USA, List.of("actors"), "image", "trailer", 1);
+                Production.USA, List.of("actors"), "trailer", 1, new byte[100]);
 
         movieRepository.create(movie);
         String newTitle = "Title update movie";
@@ -142,13 +142,13 @@ class MovieRepositoryTest {
         assertThat(movieRepository.search(keyword).size()).isEqualTo(0);
 
         Movie movie1 = new Movie(9, "TITLE", Genre.COMEDY, "description", LocalDate.now(),
-                Production.USA, List.of("actors"), "image", "trailer", 1);
+                Production.USA, List.of("actors"), "trailer", 1, new byte[100]);
         Movie movie2 = new Movie(10, "Titanic", Genre.COMEDY, "description", LocalDate.now(),
-                Production.USA, List.of("actors"), "image", "trailer", 1);
+                Production.USA, List.of("actors"), "trailer", 1, new byte[100]);
         Movie movie3 = new Movie(11, "Entity", Genre.COMEDY, "description", LocalDate.now(),
-                Production.USA, List.of("actors"), "image", "trailer", 1);
+                Production.USA, List.of("actors"), "trailer", 1, new byte[100]);
         Movie movie4 = new Movie(12, "Another", Genre.COMEDY, "description", LocalDate.now(),
-                Production.USA, List.of("actors"), "image", "trailer", 1);
+                Production.USA, List.of("actors"), "trailer", 1, new byte[100]);
 
         movieRepository.create(movie1);
         movieRepository.create(movie2);
@@ -165,9 +165,9 @@ class MovieRepositoryTest {
         assertThat(movieRepository.showSortedByGenre(genre).size()).isEqualTo(0);
 
         Movie movie1 = new Movie(9, "TITLE", Genre.COMEDY, "description", LocalDate.now(),
-                Production.USA, List.of("actors"), "image", "trailer", 1);
+                Production.USA, List.of("actors"), "trailer", 1, new byte[100]);
         Movie movie2 = new Movie(10, "Titanic", Genre.DRAMA, "description", LocalDate.now(),
-                Production.USA, List.of("actors"), "image", "trailer", 1);
+                Production.USA, List.of("actors"), "trailer", 1, new byte[100]);
 
         movieRepository.create(movie1);
         movieRepository.create(movie2);
@@ -182,9 +182,9 @@ class MovieRepositoryTest {
         assertThat(movieRepository.showSortedByCountry(country).size()).isEqualTo(0);
 
         Movie movie1 = new Movie(9, "TITLE", Genre.COMEDY, "description", LocalDate.now(),
-                Production.USA, List.of("actors"), "image", "trailer", 1);
+                Production.USA, List.of("actors"), "trailer", 1, new byte[100]);
         Movie movie2 = new Movie(10, "Titanic", Genre.DRAMA, "description", LocalDate.now(),
-                Production.UKRAINE, List.of("actors"), "image", "trailer", 1);
+                Production.UKRAINE, List.of("actors"), "trailer", 1, new byte[100]);
 
         movieRepository.create(movie1);
         movieRepository.create(movie2);
@@ -198,13 +198,13 @@ class MovieRepositoryTest {
         assertThat(movieRepository.showAllLastMovie().size()).isEqualTo(0);
 
         Movie movie1 = new Movie(9, "TITLE", Genre.COMEDY, "description", LocalDate.now(),
-                Production.USA, List.of("actors"), "image", "trailer", 1);
+                Production.USA, List.of("actors"), "trailer", 1, new byte[100]);
         Movie movie2 = new Movie(10, "Titanic", Genre.COMEDY, "description", LocalDate.now().minusDays(1),
-                Production.USA, List.of("actors"), "image", "trailer", 1);
+                Production.USA, List.of("actors"), "trailer", 1, new byte[100]);
         Movie movie3 = new Movie(11, "Entity", Genre.COMEDY, "description", LocalDate.now().plusDays(1),
-                Production.USA, List.of("actors"), "image", "trailer", 1);
+                Production.USA, List.of("actors"), "trailer", 1, new byte[100]);
         Movie movie4 = new Movie(12, "Another", Genre.COMEDY, "description", LocalDate.now().minusMonths(1),
-                Production.USA, List.of("actors"), "image", "trailer", 1);
+                Production.USA, List.of("actors"), "trailer", 1, new byte[100]);
 
         movieRepository.create(movie1);
         movieRepository.create(movie2);
@@ -225,11 +225,11 @@ class MovieRepositoryTest {
         assertThat(movieRepository.showSortedByRating().size()).isEqualTo(0);
 
         Movie movie1 = new Movie(9, "TITLE", Genre.COMEDY, "description", LocalDate.now(),
-                Production.USA, List.of("actors"), "image", "trailer", 9);
+                Production.USA, List.of("actors"), "trailer", 9, new byte[100]);
         Movie movie2 = new Movie(10, "Titanic", Genre.COMEDY, "description", LocalDate.now().minusDays(1),
-                Production.USA, List.of("actors"), "image", "trailer", 8);
+                Production.USA, List.of("actors"), "trailer", 8, new byte[100]);
         Movie movie3 = new Movie(11, "Entity", Genre.COMEDY, "description", LocalDate.now().plusDays(1),
-                Production.USA, List.of("actors"), "image", "trailer", 10);
+                Production.USA, List.of("actors"), "trailer", 10, new byte[100]);
 
         movieRepository.create(movie1);
         movieRepository.create(movie2);
@@ -241,5 +241,18 @@ class MovieRepositoryTest {
         assertThat(movies.get(0)).extracting(Movie::getId).isEqualTo(11);
         assertThat(movies.get(1)).extracting(Movie::getId).isEqualTo(9);
         assertThat(movies.get(2)).extracting(Movie::getId).isEqualTo(10);
+    }
+
+    @Test
+    @DirtiesContext
+    void check_return_image_bytes() {
+        Movie movie = new Movie(9, "TITLE", Genre.COMEDY, "description", LocalDate.now(),
+                Production.USA, List.of("actors"), "trailer", 9, new byte[100]);
+
+        movieRepository.create(movie);
+
+        byte[] bytes = movieRepository.getImage(9);
+
+        assertThat(bytes).isEqualTo(movie.getImage());
     }
 }
