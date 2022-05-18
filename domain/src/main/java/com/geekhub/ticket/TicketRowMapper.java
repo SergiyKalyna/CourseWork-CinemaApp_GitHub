@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
-public class TicketMapper implements RowMapper<Ticket> {
+public class TicketRowMapper implements RowMapper<Ticket> {
     @Override
     public Ticket mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new Ticket(

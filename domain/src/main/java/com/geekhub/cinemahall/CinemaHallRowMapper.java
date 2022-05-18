@@ -2,12 +2,11 @@ package com.geekhub.cinemahall;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CinemaHallMapper implements RowMapper<CinemaHall> {
+public class CinemaHallRowMapper implements RowMapper<CinemaHall> {
     @Override
     public CinemaHall mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new CinemaHall(

@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-@ContextConfiguration(classes = {CinemaHallRepository.class, CinemaHallMapper.class})
+@ContextConfiguration(classes = {CinemaHallRepository.class, CinemaHallRowMapper.class})
 @Sql(scripts = "classpath:schema.sql")
 class CinemaHallRepositoryTest {
 
@@ -30,7 +30,7 @@ class CinemaHallRepositoryTest {
     JdbcTemplate jdbcTemplate;
 
     @Autowired
-    CinemaHallMapper cinemaHallMapper;
+    CinemaHallRowMapper cinemaHallRowMapper;
 
     @Autowired
     CinemaHallRepository cinemaHallRepository;

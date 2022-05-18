@@ -9,11 +9,11 @@ import java.util.List;
 public class TicketBookingRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
-    private final TicketMapper ticketMapper;
+    private final TicketRowMapper ticketRowMapper;
 
-    public TicketBookingRepository(NamedParameterJdbcTemplate jdbcTemplate, TicketMapper ticketMapper) {
+    public TicketBookingRepository(NamedParameterJdbcTemplate jdbcTemplate, TicketRowMapper ticketRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
-        this.ticketMapper = ticketMapper;
+        this.ticketRowMapper = ticketRowMapper;
     }
 
     public void deleteTicket(Long id) {
@@ -23,14 +23,14 @@ public class TicketBookingRepository {
 
     public List<Ticket> getByUserId(Long id) {
         return jdbcTemplate.query("SELECT * FROM ticket WHERE user_id= :id ORDER BY time DESC",
-                        new MapSqlParameterSource("id", id), ticketMapper)
+                        new MapSqlParameterSource("id", id), ticketRowMapper)
                 .stream()
                 .toList();
     }
 
     public Ticket getById(Long id) {
         return jdbcTemplate.query("SELECT * FROM ticket WHERE id= :id",
-                        new MapSqlParameterSource("id", id), ticketMapper)
+                        new MapSqlParameterSource("id", id), ticketRowMapper)
                 .stream()
                 .findAny()
                 .orElseThrow(() -> new TicketNotFoundException(id));
@@ -39,7 +39,7 @@ public class TicketBookingRepository {
     public void createTicked(Ticket ticket) {
         jdbcTemplate.update("INSERT INTO ticket (owner,user_id,movie_name,place_quantity,time," +
                 "hall_name, event_id, common_amount) VALUES (:owner,:user_id,:movie_name,:place_quantity,:time," +
-                ":hall_name, :event_id, :common_amount)", ticketMapper.getParametersForCreate(ticket));
+                ":hall_name, :event_id, :common_amount)", ticketRowMapper.getParametersForCreate(ticket));
     }
 
     public void deleteTicketByEventId(Long eventId) {
@@ -48,7 +48,7 @@ public class TicketBookingRepository {
     }
 
     public List<Ticket> getAll() {
-        return jdbcTemplate.query("SELECT * FROM ticket ORDER BY time DESC", ticketMapper)
+        return jdbcTemplate.query("SELECT * FROM ticket ORDER BY time DESC", ticketRowMapper)
                 .stream()
                 .toList();
     }

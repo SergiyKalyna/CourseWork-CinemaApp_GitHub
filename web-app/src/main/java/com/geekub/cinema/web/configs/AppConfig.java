@@ -1,12 +1,12 @@
 package com.geekub.cinema.web.configs;
 
-import com.geekhub.cinemahall.CinemaHallMapper;
+import com.geekhub.cinemahall.CinemaHallRowMapper;
 import com.geekhub.cinemahall.CinemaHallRepository;
 import com.geekhub.cinemahall.CinemaHallService;
-import com.geekhub.event.EventMapper;
+import com.geekhub.event.EventRowMapper;
 import com.geekhub.event.EventRepository;
 import com.geekhub.event.EventService;
-import com.geekhub.feedback.FeedbackMapper;
+import com.geekhub.feedback.FeedbackRowMapper;
 import com.geekhub.feedback.FeedbackRepository;
 import com.geekhub.feedback.FeedbackService;
 import com.geekhub.movie.MovieRepository;
@@ -14,8 +14,8 @@ import com.geekhub.movie.MovieRowMapper;
 import com.geekhub.movie.MovieService;
 import com.geekhub.ticket.TicketBookingRepository;
 import com.geekhub.ticket.TicketBookingService;
-import com.geekhub.ticket.TicketMapper;
-import com.geekhub.user.UserMapper;
+import com.geekhub.ticket.TicketRowMapper;
+import com.geekhub.user.UserRowMapper;
 import com.geekhub.user.UserRepository;
 import com.geekhub.user.UserService;
 import org.springframework.context.annotation.Bean;
@@ -42,13 +42,13 @@ public class AppConfig {
     }
 
     @Bean
-    public FeedbackMapper feedbackMapper() {
-        return new FeedbackMapper();
+    public FeedbackRowMapper feedbackMapper() {
+        return new FeedbackRowMapper();
     }
 
     @Bean
-    public FeedbackRepository feedbackRepository(NamedParameterJdbcTemplate jdbcTemplate, FeedbackMapper feedbackMapper) {
-        return new FeedbackRepository(jdbcTemplate, feedbackMapper);
+    public FeedbackRepository feedbackRepository(NamedParameterJdbcTemplate jdbcTemplate, FeedbackRowMapper feedbackRowMapper) {
+        return new FeedbackRepository(jdbcTemplate, feedbackRowMapper);
     }
 
     @Bean
@@ -57,13 +57,13 @@ public class AppConfig {
     }
 
     @Bean
-    public CinemaHallMapper cinemaHallMapper() {
-        return new CinemaHallMapper();
+    public CinemaHallRowMapper cinemaHallMapper() {
+        return new CinemaHallRowMapper();
     }
 
     @Bean
-    public CinemaHallRepository cinemaHallRepository(NamedParameterJdbcTemplate jdbcTemplate, CinemaHallMapper cinemaHallMapper) {
-        return new CinemaHallRepository(jdbcTemplate, cinemaHallMapper);
+    public CinemaHallRepository cinemaHallRepository(NamedParameterJdbcTemplate jdbcTemplate, CinemaHallRowMapper cinemaHallRowMapper) {
+        return new CinemaHallRepository(jdbcTemplate, cinemaHallRowMapper);
     }
 
     @Bean
@@ -72,13 +72,13 @@ public class AppConfig {
     }
 
     @Bean
-    public EventMapper eventMapper() {
-        return new EventMapper();
+    public EventRowMapper eventMapper() {
+        return new EventRowMapper();
     }
 
     @Bean
-    public EventRepository eventRepository(NamedParameterJdbcTemplate jdbcTemplate, EventMapper eventMapper) {
-        return new EventRepository(jdbcTemplate, eventMapper);
+    public EventRepository eventRepository(NamedParameterJdbcTemplate jdbcTemplate, EventRowMapper eventRowMapper) {
+        return new EventRepository(jdbcTemplate, eventRowMapper);
     }
 
     @Bean
@@ -87,13 +87,13 @@ public class AppConfig {
     }
 
     @Bean
-    public TicketMapper ticketMapper() {
-        return new TicketMapper();
+    public TicketRowMapper ticketMapper() {
+        return new TicketRowMapper();
     }
 
     @Bean
-    public TicketBookingRepository ticketBookingRepository(NamedParameterJdbcTemplate jdbcTemplate, TicketMapper ticketMapper) {
-        return new TicketBookingRepository(jdbcTemplate, ticketMapper);
+    public TicketBookingRepository ticketBookingRepository(NamedParameterJdbcTemplate jdbcTemplate, TicketRowMapper ticketRowMapper) {
+        return new TicketBookingRepository(jdbcTemplate, ticketRowMapper);
     }
 
     @Bean
@@ -102,13 +102,13 @@ public class AppConfig {
     }
 
     @Bean
-    public UserMapper userMapper() {
-        return new UserMapper();
+    public UserRowMapper userMapper() {
+        return new UserRowMapper();
     }
 
     @Bean
-    public UserRepository userRepository(NamedParameterJdbcTemplate jdbcTemplate, UserMapper userMapper) {
-        return new UserRepository(jdbcTemplate, userMapper);
+    public UserRepository userRepository(NamedParameterJdbcTemplate jdbcTemplate, UserRowMapper userRowMapper) {
+        return new UserRepository(jdbcTemplate, userRowMapper);
     }
 
     @Bean

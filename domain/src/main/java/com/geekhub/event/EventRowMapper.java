@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
-public class EventMapper implements RowMapper<Event> {
+public class EventRowMapper implements RowMapper<Event> {
 
     @Override
     public Event mapRow(ResultSet rs, int rowNum) throws SQLException {

@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-@ContextConfiguration(classes = {FeedbackRepository.class, FeedbackMapper.class})
+@ContextConfiguration(classes = {FeedbackRepository.class, FeedbackRowMapper.class})
 @Sql(scripts = "classpath:schema.sql")
 class FeedbackRepositoryTest {
 
@@ -31,7 +31,7 @@ class FeedbackRepositoryTest {
     JdbcTemplate jdbcTemplate;
 
     @Autowired
-    FeedbackMapper feedbackMapper;
+    FeedbackRowMapper feedbackRowMapper;
 
     @Autowired
     FeedbackRepository feedbackRepository;

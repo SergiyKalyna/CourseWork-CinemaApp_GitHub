@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
-public class FeedbackMapper implements RowMapper<Feedback> {
+public class FeedbackRowMapper implements RowMapper<Feedback> {
 
     @Override
     public Feedback mapRow(ResultSet rs, int rowNum) throws SQLException {

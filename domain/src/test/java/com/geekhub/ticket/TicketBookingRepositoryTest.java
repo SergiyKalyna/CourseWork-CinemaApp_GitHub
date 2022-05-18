@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-@ContextConfiguration(classes = {TicketBookingRepository.class, TicketMapper.class})
+@ContextConfiguration(classes = {TicketBookingRepository.class, TicketRowMapper.class})
 @Sql(scripts = "classpath:schema.sql")
 class TicketBookingRepositoryTest {
 
@@ -31,7 +31,7 @@ class TicketBookingRepositoryTest {
     JdbcTemplate jdbcTemplate;
 
     @Autowired
-    TicketMapper ticketMapper;
+    TicketRowMapper ticketRowMapper;
 
     @Autowired
     TicketBookingRepository ticketBookingRepository;

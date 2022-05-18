@@ -9,27 +9,27 @@ import java.util.List;
 public class FeedbackRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
-    private final FeedbackMapper feedbackMapper;
+    private final FeedbackRowMapper feedbackRowMapper;
 
-    public FeedbackRepository(NamedParameterJdbcTemplate jdbcTemplate, FeedbackMapper feedbackMapper) {
+    public FeedbackRepository(NamedParameterJdbcTemplate jdbcTemplate, FeedbackRowMapper feedbackRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
-        this.feedbackMapper = feedbackMapper;
+        this.feedbackRowMapper = feedbackRowMapper;
     }
 
     public List<Feedback> showAll() {
-        return jdbcTemplate.query("SELECT * FROM feedback ORDER BY time DESC", feedbackMapper);
+        return jdbcTemplate.query("SELECT * FROM feedback ORDER BY time DESC", feedbackRowMapper);
     }
 
     public List<Feedback> showAllByFilmId(int id) {
         return jdbcTemplate.query("SELECT * FROM feedback WHERE movie_id= :id ORDER BY time DESC",
-                        new MapSqlParameterSource("id", id), feedbackMapper)
+                        new MapSqlParameterSource("id", id), feedbackRowMapper)
                 .stream()
                 .toList();
     }
 
     public Feedback getById(Long id) {
         return jdbcTemplate.query("SELECT * FROM feedback WHERE id= :id",
-                        new MapSqlParameterSource("id", id), feedbackMapper)
+                        new MapSqlParameterSource("id", id), feedbackRowMapper)
                 .stream()
                 .findAny()
                 .orElseThrow(() -> new FeedbackNotFoundException(id));
@@ -43,12 +43,12 @@ public class FeedbackRepository {
     public void create(Feedback feedback) {
         jdbcTemplate.update("INSERT INTO feedback (time,movie_id,user_id,name,feedback,score) " +
                         "VALUES (:time,:movie_id,:user_id,:name,:feedback,:score)",
-                feedbackMapper.getParametersForCreate(feedback));
+                feedbackRowMapper.getParametersForCreate(feedback));
     }
 
     public void update(Long id, Feedback updateFeedback) {
         jdbcTemplate.update("UPDATE feedback SET time= :time, feedback= :feedback, score= :score WHERE id= :id",
-                feedbackMapper.getParametersForUpdate(id, updateFeedback));
+                feedbackRowMapper.getParametersForUpdate(id, updateFeedback));
     }
 }
 

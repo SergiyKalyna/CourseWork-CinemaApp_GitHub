@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-@ContextConfiguration(classes = {EventRepository.class, EventMapper.class})
+@ContextConfiguration(classes = {EventRepository.class, EventRowMapper.class})
 @Sql(scripts = "classpath:schema.sql")
 class EventRepositoryTest {
 
@@ -32,7 +32,7 @@ class EventRepositoryTest {
     JdbcTemplate jdbcTemplate;
 
     @Autowired
-    EventMapper eventMapper;
+    EventRowMapper eventRowMapper;
 
     @Autowired
     EventRepository eventRepository;
