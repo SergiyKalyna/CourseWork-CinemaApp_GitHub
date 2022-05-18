@@ -8,9 +8,7 @@ import com.geekhub.event.EventConverter;
 import com.geekhub.event.EventRowMapper;
 import com.geekhub.event.EventRepository;
 import com.geekhub.event.EventService;
-import com.geekhub.feedback.FeedbackRowMapper;
-import com.geekhub.feedback.FeedbackRepository;
-import com.geekhub.feedback.FeedbackService;
+import com.geekhub.feedback.*;
 import com.geekhub.movie.MovieRepository;
 import com.geekhub.movie.MovieRowMapper;
 import com.geekhub.movie.MovieService;
@@ -126,5 +124,10 @@ public class AppConfig {
     @Bean
     public EventConverter eventConverter(MovieService movieService, CinemaHallService cinemaHallService) {
         return new EventConverter(movieService, cinemaHallService);
+    }
+
+    @Bean
+    public FeedbackConverter feedbackConverter (UserService userService){
+        return new FeedbackConverter(userService);
     }
 }

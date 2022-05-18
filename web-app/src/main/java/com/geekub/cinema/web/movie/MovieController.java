@@ -2,8 +2,10 @@ package com.geekub.cinema.web.movie;
 
 
 import com.geekhub.exception.MovieNotFoundException;
-import com.geekhub.feedback.Feedback;
+import com.geekhub.feedback.FeedbackConverter;
 import com.geekhub.feedback.FeedbackService;
+import com.geekhub.feedback.dto.FeedbackCreationDto;
+import com.geekhub.feedback.dto.FeedbackDto;
 import com.geekhub.models.Genre;
 import com.geekhub.models.Production;
 import com.geekhub.models.Role;
@@ -33,10 +35,12 @@ public class MovieController {
 
     private final MovieService movieService;
     private final FeedbackService feedbackService;
+    private final FeedbackConverter feedbackConverter;
 
-    public MovieController(MovieService movieService, FeedbackService feedbackService) {
+    public MovieController(MovieService movieService, FeedbackService feedbackService, FeedbackConverter feedbackConverter) {
         this.movieService = movieService;
         this.feedbackService = feedbackService;
+        this.feedbackConverter = feedbackConverter;
     }
 
     @GetMapping()
@@ -60,11 +64,13 @@ public class MovieController {
     @PreAuthorize("hasRole('USER')")
     public String showMovie(@AuthenticationPrincipal User user,
                             @PathVariable("id") int id,
-                            @ModelAttribute("newFeedback") Feedback feedback,
+                            @ModelAttribute("newFeedback") FeedbackCreationDto feedback,
                             Model model) {
+        List<FeedbackDto> feedbacks =
+                feedbackConverter.convertToListDto(feedbackService.showAllByFilmId(id));
 
         model.addAttribute("movie", movieService.show(id));
-        model.addAttribute("feedbacks", feedbackService.showAllByFilmId(id));
+        model.addAttribute("feedbacks", feedbacks);
         model.addAttribute("checkUserRights", user.getRole().equals(Role.ADMIN));
 
         return "movies/show-movie-details";

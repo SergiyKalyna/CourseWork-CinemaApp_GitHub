@@ -2,7 +2,9 @@ package com.geekub.cinema.web.feedback;
 
 import com.geekhub.exception.UserHaveNotRightsException;
 import com.geekhub.feedback.Feedback;
+import com.geekhub.feedback.FeedbackConverter;
 import com.geekhub.feedback.FeedbackService;
+import com.geekhub.feedback.dto.FeedbackCreationDto;
 import com.geekhub.models.Role;
 import com.geekhub.user.User;
 import org.slf4j.Logger;
@@ -19,21 +21,22 @@ public class FeedbackController {
     private static final Logger logger = LoggerFactory.getLogger(FeedbackController.class);
 
     private final FeedbackService feedbackService;
+    private final FeedbackConverter feedbackConverter;
 
-    public FeedbackController(FeedbackService feedbackService) {
+    public FeedbackController(FeedbackService feedbackService, FeedbackConverter feedbackConverter) {
         this.feedbackService = feedbackService;
+        this.feedbackConverter = feedbackConverter;
     }
 
     @PostMapping("/{movieId}")
     @PreAuthorize("hasRole('USER')")
     public String addFeedback(@PathVariable("movieId") int movieId,
-                              @ModelAttribute("newFeedback") Feedback feedback,
+                              @ModelAttribute("newFeedback") FeedbackCreationDto feedbackCreationDto,
                               @AuthenticationPrincipal User user) {
-        feedback.setMovieId(movieId);
-        feedback.setUserId(user.getId());
-        feedback.setUserName(user.getFirstName() + " " + user.getSecondName());
+        feedbackCreationDto.setMovieId(movieId);
+        feedbackCreationDto.setUserId(user.getId());
 
-        feedbackService.create(feedback);
+        feedbackService.create(feedbackConverter.convertFromDto(feedbackCreationDto));
 
         return "redirect:/movies/" + movieId;
     }
@@ -53,8 +56,10 @@ public class FeedbackController {
                                @AuthenticationPrincipal User user,
                                Model model) {
         Feedback feedbackFromDb = feedbackService.getFeedback(id);
+        FeedbackCreationDto feedbackDto = feedbackConverter.convertToFeedbackCreationDto(feedbackFromDb);
+
         if (user.getRole() == Role.ADMIN || user.getId().equals(feedbackFromDb.getUserId())) {
-            model.addAttribute("feedback", feedbackFromDb);
+            model.addAttribute("feedback", feedbackDto);
             logger.info("Started operation for edit feedback with id - " + id);
         } else {
             throw new UserHaveNotRightsException("You have not a rights to edit this feedback");
@@ -67,12 +72,13 @@ public class FeedbackController {
     public String updateFeedback(@PathVariable("id") Long id,
                                  @RequestParam("feedback") String feedback,
                                  @RequestParam("stars") String rating) {
-        Feedback feedbackFromDb = feedbackService.getFeedback(id);
-        feedbackFromDb.setMovieScore(Integer.parseInt(rating));
-        feedbackFromDb.setFeedback(feedback);
+        FeedbackCreationDto dto =
+                feedbackConverter.convertToFeedbackCreationDto(feedbackService.getFeedback(id));
+        dto.setMovieScore(Integer.parseInt(rating));
+        dto.setFeedback(feedback);
 
-        feedbackService.update(id, feedbackFromDb);
+        feedbackService.update(id, feedbackConverter.convertFromDto(dto));
 
-        return "redirect:/movies/" + feedbackFromDb.getMovieId();
+        return "redirect:/movies/" + dto.getMovieId();
     }
 }
