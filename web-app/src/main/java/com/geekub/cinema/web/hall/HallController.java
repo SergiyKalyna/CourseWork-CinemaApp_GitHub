@@ -1,8 +1,8 @@
 package com.geekub.cinema.web.hall;
 
-import com.geekhub.cinemahall.CinemaHall;
+import com.geekhub.cinemahall.CinemaHallConverter;
+import com.geekhub.cinemahall.CinemaHallDto;
 import com.geekhub.cinemahall.CinemaHallService;
-import com.geekhub.event.EventService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -10,21 +10,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/halls")
 public class HallController {
     private static final Logger logger = LoggerFactory.getLogger(HallController.class);
 
     private final CinemaHallService cinemaHallService;
+    private final CinemaHallConverter cinemaHallConverter;
 
-    public HallController(CinemaHallService cinemaHallService) {
+    public HallController(CinemaHallService cinemaHallService, CinemaHallConverter cinemaHallConverter) {
         this.cinemaHallService = cinemaHallService;
+        this.cinemaHallConverter = cinemaHallConverter;
     }
 
     @GetMapping()
     @PreAuthorize("hasRole('ADMIN')")
     public String showHalls(Model model) {
-        model.addAttribute("halls", cinemaHallService.getAllHalls());
+        List<CinemaHallDto> halls = cinemaHallConverter.convertListToDto(cinemaHallService.getAllHalls());
+        model.addAttribute("halls", halls);
 
         return "hall/all-halls";
     }
@@ -32,7 +37,9 @@ public class HallController {
     @GetMapping("/{id}/edit")
     @PreAuthorize("hasRole('ADMIN')")
     public String editHall(Model model, @PathVariable("id") int id) {
-        model.addAttribute("cinemaHall", cinemaHallService.getHall(id));
+        CinemaHallDto cinemaHall = cinemaHallConverter.convertToDto(cinemaHallService.getHall(id));
+
+        model.addAttribute("cinemaHall", cinemaHall);
         logger.info("Started operation to edit hall with id -" + id);
 
         return "hall/edit";
@@ -40,16 +47,17 @@ public class HallController {
 
     @PostMapping("/{id}/update")
     @PreAuthorize("hasRole('ADMIN')")
-    public String updateHall(@ModelAttribute("cinemaHall") CinemaHall cinemaHall,
+    public String updateHall(@ModelAttribute("cinemaHall") CinemaHallDto cinemaHall,
                              @PathVariable("id") int id) {
-        cinemaHallService.updateHall(id, cinemaHall);
+
+        cinemaHallService.updateHall(id, cinemaHallConverter.convertFromDto(cinemaHall));
 
         return "redirect:/halls";
     }
 
     @GetMapping("/create")
     @PreAuthorize("hasRole('ADMIN')")
-    public String createHall(@ModelAttribute("cinemaHall") CinemaHall cinemaHall) {
+    public String createHall(@ModelAttribute("cinemaHall") CinemaHallDto cinemaHall) {
         logger.info("Started operation to create hall");
 
         return "hall/create";
@@ -57,8 +65,8 @@ public class HallController {
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
-    public String addHall(@ModelAttribute("cinemaHall") CinemaHall cinemaHall) {
-        cinemaHallService.addHall(cinemaHall);
+    public String addHall(@ModelAttribute("cinemaHall") CinemaHallDto cinemaHall) {
+        cinemaHallService.addHall(cinemaHallConverter.convertFromDto(cinemaHall));
 
         return "redirect:/halls";
     }

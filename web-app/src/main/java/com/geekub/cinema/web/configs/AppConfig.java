@@ -1,5 +1,6 @@
 package com.geekub.cinema.web.configs;
 
+import com.geekhub.cinemahall.CinemaHallConverter;
 import com.geekhub.cinemahall.CinemaHallRowMapper;
 import com.geekhub.cinemahall.CinemaHallRepository;
 import com.geekhub.cinemahall.CinemaHallService;
@@ -114,5 +115,10 @@ public class AppConfig {
     @Bean
     public UserService userService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         return new UserService(userRepository, bCryptPasswordEncoder);
+    }
+
+    @Bean
+    public CinemaHallConverter cinemaHallConverter() {
+        return new CinemaHallConverter();
     }
 }
