@@ -1,8 +1,8 @@
 package com.geekub.cinema.web.event;
 
-import com.geekhub.cinemahall.CinemaHallService;
-import com.geekhub.event.Event;
+import com.geekhub.event.EventConverter;
 import com.geekhub.event.EventService;
+import com.geekhub.event.dto.EventCreationDto;
 import com.geekhub.movie.MovieService;
 import com.geekhub.ticket.TicketBookingService;
 import org.slf4j.Logger;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
 
 @Controller
 @RequestMapping("/events")
@@ -24,21 +23,22 @@ public class EventController {
 
     private final EventService eventService;
     private final MovieService movieService;
-    private final CinemaHallService cinemaHallService;
     private final TicketBookingService ticketBookingService;
+    private final EventConverter eventConverter;
 
-    public EventController(EventService eventService, MovieService movieService, CinemaHallService cinemaHallService, TicketBookingService ticketBookingService) {
+    public EventController(EventService eventService, MovieService movieService, TicketBookingService ticketBookingService, EventConverter eventConverter) {
         this.eventService = eventService;
         this.movieService = movieService;
-        this.cinemaHallService = cinemaHallService;
         this.ticketBookingService = ticketBookingService;
+        this.eventConverter = eventConverter;
     }
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public String getEvents(Model model) {
-        var events = eventService.getAll();
-        model.addAttribute("events", getFullEventsParameters(events));
+        var events = eventConverter.convertListToDto(eventService.getAll());
+
+        model.addAttribute("events", events);
 
         return "event/all-events";
     }
@@ -56,10 +56,12 @@ public class EventController {
     @PreAuthorize("hasRole('ADMIN')")
     public String editEvent(@PathVariable("id") String id, Model model) {
         LocalDateTime localDateTimeNow = LocalDateTime.of(LocalDate.now(),
-                LocalTime.of(LocalTime.now().getHour(),LocalTime.now().getMinute(),0));
+                LocalTime.of(LocalTime.now().getHour(), LocalTime.now().getMinute(), 0));
+        EventCreationDto eventCreationDto =
+                eventConverter.convertToEventCreationDto(eventService.getEvent(Long.valueOf(id)));
 
         model.addAttribute("dateTimeNow", localDateTimeNow);
-        model.addAttribute("event", eventService.getEvent(Long.valueOf(id)));
+        model.addAttribute("event", eventCreationDto);
         logger.info("Started operation of edit event with id - " + id);
 
         return "event/edit";
@@ -71,12 +73,13 @@ public class EventController {
                               @RequestParam("placeCost") String placeCost,
                               @RequestParam("cinemaHallId") String cinemaHallId,
                               @RequestParam("time") String time) {
-        Event event = eventService.getEvent(id);
-        event.setPlaceCost(Integer.parseInt(placeCost));
-        event.setCinemaHallId(Integer.parseInt(cinemaHallId));
-        event.setTime(LocalDateTime.parse(time));
+        EventCreationDto eventCreationDto =
+                eventConverter.convertToEventCreationDto(eventService.getEvent(id));
+        eventCreationDto.setPlaceCost(Integer.parseInt(placeCost));
+        eventCreationDto.setCinemaHallId(Integer.parseInt(cinemaHallId));
+        eventCreationDto.setTime(LocalDateTime.parse(time));
 
-        eventService.updateEvent(id, event);
+        eventService.updateEvent(id, eventConverter.convertFromDto(eventCreationDto));
 
         return "redirect:/events";
     }
@@ -84,8 +87,9 @@ public class EventController {
     @GetMapping("/sorted")
     @PreAuthorize("hasRole('ADMIN')")
     public String sortEventByHall(Model model) {
-        var events = eventService.sortByHall();
-        model.addAttribute("events", getFullEventsParameters(events));
+        var events = eventConverter.convertListToDto(eventService.sortByHall());
+
+        model.addAttribute("events", events);
 
         return "event/all-events";
     }
@@ -94,9 +98,9 @@ public class EventController {
     @PreAuthorize("hasRole('ADMIN')")
     public String createEvent(@PathVariable("id") int movieId, Model model) {
         LocalDateTime localDateTimeNow = LocalDateTime.of(LocalDate.now(),
-                LocalTime.of(LocalTime.now().getHour(),LocalTime.now().getMinute(),0));
+                LocalTime.of(LocalTime.now().getHour(), LocalTime.now().getMinute(), 0));
 
-        model.addAttribute("event", new Event());
+        model.addAttribute("event", new EventCreationDto());
         model.addAttribute("movie", movieService.show(movieId));
         model.addAttribute("dateTimeNow", localDateTimeNow);
 
@@ -112,23 +116,14 @@ public class EventController {
                            @RequestParam("cinemaHallId") String cinemaHallId,
                            @RequestParam("time") String time) {
 
-        Event event = new Event();
-        event.setMovieId(movieId);
-        event.setPlaceCost(Integer.parseInt(placeCost));
-        event.setCinemaHallId(Integer.parseInt(cinemaHallId));
-        event.setTime(LocalDateTime.parse(time));
+        EventCreationDto eventCreationDto = new EventCreationDto();
+        eventCreationDto.setMovieId(movieId);
+        eventCreationDto.setPlaceCost(Integer.parseInt(placeCost));
+        eventCreationDto.setCinemaHallId(Integer.parseInt(cinemaHallId));
+        eventCreationDto.setTime(LocalDateTime.parse(time));
 
-        eventService.addEvent(event);
+        eventService.addEvent(eventConverter.convertFromDto(eventCreationDto));
 
         return "redirect:/events";
-    }
-
-    private List<Event> getFullEventsParameters(List<Event> events) {
-        events.forEach(event -> {
-            event.setMovieName(movieService.show(event.getMovieId()).getTitle());
-            event.setHallName(cinemaHallService.getHall(event.getCinemaHallId()).getName());
-        });
-
-        return events;
     }
 }

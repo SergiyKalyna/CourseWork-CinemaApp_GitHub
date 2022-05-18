@@ -1,7 +1,7 @@
 package com.geekub.cinema.web.hall;
 
 import com.geekhub.cinemahall.CinemaHallConverter;
-import com.geekhub.cinemahall.CinemaHallDto;
+import com.geekhub.cinemahall.dto.CinemaHallDto;
 import com.geekhub.cinemahall.CinemaHallService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,5 +1,7 @@
 package com.geekhub.cinemahall;
 
+import com.geekhub.cinemahall.dto.CinemaHallDto;
+
 import java.util.List;
 import java.util.stream.Collectors;
 

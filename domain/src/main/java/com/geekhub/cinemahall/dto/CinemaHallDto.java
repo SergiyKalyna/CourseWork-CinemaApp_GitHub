@@ -1,4 +1,4 @@
-package com.geekhub.cinemahall;
+package com.geekhub.cinemahall.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

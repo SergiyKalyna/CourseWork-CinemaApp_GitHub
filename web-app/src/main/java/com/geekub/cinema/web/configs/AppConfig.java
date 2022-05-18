@@ -4,6 +4,7 @@ import com.geekhub.cinemahall.CinemaHallConverter;
 import com.geekhub.cinemahall.CinemaHallRowMapper;
 import com.geekhub.cinemahall.CinemaHallRepository;
 import com.geekhub.cinemahall.CinemaHallService;
+import com.geekhub.event.EventConverter;
 import com.geekhub.event.EventRowMapper;
 import com.geekhub.event.EventRepository;
 import com.geekhub.event.EventService;
@@ -120,5 +121,10 @@ public class AppConfig {
     @Bean
     public CinemaHallConverter cinemaHallConverter() {
         return new CinemaHallConverter();
+    }
+
+    @Bean
+    public EventConverter eventConverter(MovieService movieService, CinemaHallService cinemaHallService) {
+        return new EventConverter(movieService, cinemaHallService);
     }
 }

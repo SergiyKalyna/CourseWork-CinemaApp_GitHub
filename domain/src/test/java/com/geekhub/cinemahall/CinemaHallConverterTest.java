@@ -1,5 +1,6 @@
 package com.geekhub.cinemahall;
 
+import com.geekhub.cinemahall.dto.CinemaHallDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
