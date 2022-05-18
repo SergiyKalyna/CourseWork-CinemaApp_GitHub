@@ -19,14 +19,15 @@ public class Movie {
     private LocalDate release;
     private Production country;
     private List<String> actors;
-    private String imageName;
+    private String imageFile;
     private String trailer;
     private int averageRating;
+    private byte[] image;
 
     public Movie() {
     }
 
-    public Movie(int id, String title, Genre genre, String description, LocalDate release, Production country, List<String> actors, String imageName, String trailer, int averageRating) {
+    public Movie(int id, String title, Genre genre, String description, LocalDate release, Production country, List<String> actors, String imageFile, String trailer, int averageRating) {
         this.id = id;
         this.title = title;
         this.genre = genre;
@@ -34,13 +35,26 @@ public class Movie {
         this.release = release;
         this.country = country;
         this.actors = actors;
-        this.imageName = imageName;
+        this.imageFile = imageFile;
         this.trailer = trailer;
         this.averageRating = averageRating;
     }
 
+    public Movie(int id, String title, Genre genre, String description, LocalDate release, Production country, List<String> actors, String trailer, int averageRating, byte[] image) {
+        this.id = id;
+        this.title = title;
+        this.genre = genre;
+        this.description = description;
+        this.release = release;
+        this.country = country;
+        this.actors = actors;
+        this.trailer = trailer;
+        this.averageRating = averageRating;
+        this.image = image;
+    }
+
     @Transient
     public String getPhotosImagePath() {
-        return "/web-app/src/main/resources/static/images/" + imageName;
+        return "/web-app/src/main/resources/static/images/" + imageFile;
     }
 }

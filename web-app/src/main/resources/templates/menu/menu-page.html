@@ -24,7 +24,7 @@
             <div class="col-6">
                 <ul class="nav">
                     <li class="nav-item">
-                        <form name="f" th:if="${checkUserRights}"  th:action="@{/admin/users}" method="get">
+                        <form name="f" th:if="${checkUserRights}" th:action="@{/admin/users}" method="get">
                             <button type="submit" class="btn btn-link nav-link">Admin panel</button>
                         </form>
                     </li>
@@ -76,7 +76,8 @@
                     <div style="text-align: center;">
                         <div class="card mb-4 box-shadow">
                             <div style="text-align: center;">
-                                <img th:src="@{${movie.photosImagePath}}" th:width="250" th:height="360" style="max-width: 100%;"/>
+                                <img th:src="${'data:image/jpeg;charset=utf-8;base64,'+ movie.getImageFile}"
+                                     alt="" th:width="250" th:height="360" style="max-width: 100%;"/>
                             </div>
                             <div class="card-body">
                                 <p class="card-text">

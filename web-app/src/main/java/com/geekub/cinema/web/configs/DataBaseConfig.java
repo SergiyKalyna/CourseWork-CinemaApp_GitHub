@@ -39,6 +39,7 @@ public class DataBaseConfig {
     public Flyway flyway(DataSource dataSource) {
         return Flyway.configure()
                 .outOfOrder(true)
+                .baselineOnMigrate(true)
                 .locations("classpath:db/migration")
                 .dataSource(dataSource)
                 .load();

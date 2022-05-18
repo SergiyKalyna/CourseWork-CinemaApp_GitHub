@@ -9,7 +9,7 @@ import com.geekhub.event.EventService;
 import com.geekhub.feedback.FeedbackMapper;
 import com.geekhub.feedback.FeedbackRepository;
 import com.geekhub.feedback.FeedbackService;
-import com.geekhub.movie.MovieMapper;
+import com.geekhub.movie.MovieRowMapper;
 import com.geekhub.movie.MovieRepository;
 import com.geekhub.movie.MovieService;
 import com.geekhub.ticket.TicketBookingRepository;
@@ -28,13 +28,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class AppConfig {
 
     @Bean
-    public MovieMapper movieMapper() {
-        return new MovieMapper();
+    public MovieRowMapper movieMapper() {
+        return new MovieRowMapper();
     }
 
     @Bean
-    public MovieRepository movieRepository(NamedParameterJdbcTemplate jdbcTemplate, MovieMapper movieMapper) {
-        return new MovieRepository(jdbcTemplate, movieMapper);
+    public MovieRepository movieRepository(NamedParameterJdbcTemplate jdbcTemplate, MovieRowMapper movieRowMapper) {
+        return new MovieRepository(jdbcTemplate, movieRowMapper);
     }
 
     @Bean

@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-@ContextConfiguration(classes = {MovieRepository.class, MovieMapper.class})
+@ContextConfiguration(classes = {MovieRepository.class, MovieRowMapper.class})
 @Sql(scripts = "classpath:schema.sql")
 class MovieRepositoryTest {
 
@@ -34,7 +34,7 @@ class MovieRepositoryTest {
     JdbcTemplate jdbcTemplate;
 
     @Autowired
-    MovieMapper movieMapper;
+    MovieRowMapper movieRowMapper;
 
     @Autowired
     MovieRepository movieRepository;

@@ -220,15 +220,13 @@ public class MovieController {
         movie.setActors(List.of(actors));
 
         if (!multipartFile.isEmpty()) {
-//            byte[] uploadImageBytes;
-//            try {
-//                uploadImageBytes = multipartFile.getBytes();
-//            } catch (IOException e){
-//                logger.error("Convert image to byte was failed");
-//            }
-            String newFileName = fileUploadUtil.getNewImageName(movie.getRelease(), movie.getTitle(), multipartFile);
-            movie.setImageName(newFileName);
-            fileUploadUtil.saveFile(newFileName, multipartFile);
+            byte[] uploadImageBytes;
+            try {
+                uploadImageBytes = multipartFile.getBytes();
+                movie.setImage(uploadImageBytes);
+            } catch (IOException e){
+                logger.error("Convert image to byte was failed");
+            }
         }
         if (trailerLink != null || !trailerLink.isBlank()) {
             movie.setTrailer(trailerLink);

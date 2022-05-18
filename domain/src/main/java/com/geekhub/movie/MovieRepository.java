@@ -8,28 +8,28 @@ import java.util.List;
 
 public class MovieRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
-    private final MovieMapper movieMapper;
+    private final MovieRowMapper movieRowMapper;
 
-    public MovieRepository(NamedParameterJdbcTemplate jdbcTemplate, MovieMapper movieMapper) {
+    public MovieRepository(NamedParameterJdbcTemplate jdbcTemplate, MovieRowMapper movieRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
-        this.movieMapper = movieMapper;
+        this.movieRowMapper = movieRowMapper;
     }
 
     public void create(Movie movie) {
-        jdbcTemplate.update("INSERT INTO movie (title, description, release, genre, production, actors, image_name, " +
+        jdbcTemplate.update("INSERT INTO movie (title, description, release, genre, production, actors, image, " +
                 "trailer, rating) VALUES(:title,:description,:release, :genre, :production, :actors, " +
-                ":image_name, :trailer, :rating)", movieMapper.getParametersForCreate(movie));
+                ":image, :trailer, :rating)", movieRowMapper.getParametersForCreate(movie));
     }
 
     public List<Movie> showAll() {
-        return jdbcTemplate.query("SELECT * FROM movie ORDER BY release DESC", movieMapper)
+        return jdbcTemplate.query("SELECT * FROM movie ORDER BY release DESC", movieRowMapper)
                 .stream()
                 .toList();
     }
 
     public Movie show(int id) {
         return jdbcTemplate.query("SELECT * FROM movie WHERE id= :id",
-                        new MapSqlParameterSource("id", id), movieMapper)
+                        new MapSqlParameterSource("id", id), movieRowMapper)
                 .stream()
                 .findAny()
                 .orElseThrow(() -> new MovieNotFoundException(id));
@@ -43,7 +43,7 @@ public class MovieRepository {
     public void update(int id, Movie updatedMovie) {
         jdbcTemplate.update("UPDATE  movie SET title= :title, description= :description," +
                 "release= :release, genre= :genre, production= :production, actors= :actors, image_name= :image_name, " +
-                "trailer= :trailer, rating= :rating WHERE id= :id", movieMapper.getParametersForUpdate(id, updatedMovie));
+                "trailer= :trailer, rating= :rating WHERE id= :id", movieRowMapper.getParametersForUpdate(id, updatedMovie));
     }
 
     public List<Movie> search(String keyWord) {
@@ -51,33 +51,33 @@ public class MovieRepository {
 
         return jdbcTemplate.query("SELECT * FROM movie WHERE title LIKE '%" + keyWord + "%' OR title LIKE '%" +
                 keyword1 + "%' OR title LIKE '%" + keyWord.toUpperCase() + "%' OR title LIKE '%" +
-                keyWord.toLowerCase() + "%'", movieMapper)
+                keyWord.toLowerCase() + "%'", movieRowMapper)
                 .stream()
                 .toList();
     }
 
     public List<Movie> showSortedByGenre(String genre) {
         return jdbcTemplate.query("SELECT * FROM movie WHERE genre= :genre ORDER BY release DESC",
-                        new MapSqlParameterSource("genre", genre), movieMapper)
+                        new MapSqlParameterSource("genre", genre), movieRowMapper)
                 .stream()
                 .toList();
     }
 
     public List<Movie> showSortedByCountry(String production) {
         return jdbcTemplate.query("SELECT * FROM movie WHERE production= :production ORDER BY release DESC",
-                        new MapSqlParameterSource("production", production), movieMapper)
+                        new MapSqlParameterSource("production", production), movieRowMapper)
                 .stream()
                 .toList();
     }
 
     public List<Movie> showAllLastMovie() {
-        return jdbcTemplate.query("SELECT * FROM movie ORDER BY release DESC LIMIT 3", movieMapper)
+        return jdbcTemplate.query("SELECT * FROM movie ORDER BY release DESC LIMIT 3", movieRowMapper)
                 .stream()
                 .toList();
     }
 
     public List<Movie> showSortedByRating() {
-        return jdbcTemplate.query("SELECT * FROM movie ORDER BY rating DESC", movieMapper)
+        return jdbcTemplate.query("SELECT * FROM movie ORDER BY rating DESC", movieRowMapper)
                 .stream()
                 .toList();
     }

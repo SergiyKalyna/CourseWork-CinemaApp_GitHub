@@ -133,7 +133,7 @@ public class MovieService {
             throw new ValidationException("Was not to inputted releases country of the movie");
         } else if (movie.getRelease() == null) {
             throw new ValidationException("Was not to inputted date of the release movie");
-        } else if (movie.getImageName() == null) {
+        } else if (movie.getImage().length < 1) {
             throw new ValidationException("Was not to inputted image of the movie");
         } else if (movie.getTrailer() == null || movie.getTrailer().isBlank() || !checkValidUrl(movie.getTrailer())) {
             throw new ValidationException("Was not to inputted link on the trailer of the movie or input link is invalid");

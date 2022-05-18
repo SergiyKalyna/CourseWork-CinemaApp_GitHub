@@ -438,9 +438,9 @@ class MovieServiceTest {
     }
 
     @Test
-    void create_when_image_name_is_null() {
+    void create_when_image_array_is_empty() {
         Movie movie = new Movie(1, "title", Genre.COMEDY, "desc", LocalDate.of(2021, 12, 11),
-                Production.USA, List.of("actors"), null, "http", 7);
+                Production.USA, List.of("actors"), "http", 7, new byte[0]);
 
         assertThrows(ValidationException.class, () -> movieService.create(movie));
     }
@@ -448,7 +448,7 @@ class MovieServiceTest {
     @Test
     void create_when_trailer_name_is_null() {
         Movie movie = new Movie(1, "title", Genre.COMEDY, "desc", LocalDate.of(2021, 12, 11),
-                Production.USA, List.of("actors"), "image", null, 7);
+                Production.USA, List.of("actors"), null, 7, new byte[100]);
 
         assertThrows(ValidationException.class, () -> movieService.create(movie));
     }
@@ -456,7 +456,7 @@ class MovieServiceTest {
     @Test
     void create_when_trailer_name_is_empty() {
         Movie movie = new Movie(1, "title", Genre.COMEDY, "desc", LocalDate.of(2021, 12, 11),
-                Production.USA, List.of("actors"), "image", "", 7);
+                Production.USA, List.of("actors"), "", 7, new byte[100]);
 
         assertThrows(ValidationException.class, () -> movieService.create(movie));
     }
@@ -464,7 +464,7 @@ class MovieServiceTest {
     @Test
     void create_when_trailer_link_is_not_valid() {
         Movie movie = new Movie(1, "title", Genre.COMEDY, "desc", LocalDate.of(2021, 12, 11),
-                Production.USA, List.of("actors"), "image", "not valid", 7);
+                Production.USA, List.of("actors"), "not valid", 7, new byte[100]);
 
         assertThrows(ValidationException.class, () -> movieService.create(movie));
     }
@@ -472,7 +472,7 @@ class MovieServiceTest {
     @Test
     void create_check_call_repository_method() {
         Movie movie = new Movie(1, "title", Genre.COMEDY, "desc", LocalDate.of(2021, 12, 11),
-                Production.USA, List.of("actors"), "image", "https://www.youtube.com/watch?v=kVrqfYjkTdQ&t=10s", 7);
+                Production.USA, List.of("actors"), "https://www.youtube.com/watch?v=kVrqfYjkTdQ&t=10s", 7, new byte[100]);
 
         movieService.create(movie);
 
@@ -482,7 +482,7 @@ class MovieServiceTest {
     @Test
     void success_create_movie() {
         Movie movie = new Movie(1, "title", Genre.COMEDY, "desc", LocalDate.of(2021, 12, 11),
-                Production.USA, List.of("actors"), "image", "https://www.youtube.com/watch?v=kVrqfYjkTdQ&t=10s", 7);
+                Production.USA, List.of("actors"), "https://www.youtube.com/watch?v=kVrqfYjkTdQ&t=10s", 7, new byte[100]);
 
         assertDoesNotThrow(() -> movieService.create(movie));
     }
@@ -552,9 +552,9 @@ class MovieServiceTest {
     }
 
     @Test
-    void update_when_image_name_is_null() {
+    void update_when_image_array_is_empty() {
         Movie movie = new Movie(1, "title", Genre.COMEDY, "desc", LocalDate.of(2021, 12, 11),
-                Production.USA, List.of("actors"), null, "http", 7);
+                Production.USA, List.of("actors"), "http", 7, new byte[0]);
 
         assertThrows(ValidationException.class, () -> movieService.update(1, movie));
     }
@@ -562,7 +562,7 @@ class MovieServiceTest {
     @Test
     void update_when_trailer_name_is_null() {
         Movie movie = new Movie(1, "title", Genre.COMEDY, "desc", LocalDate.of(2021, 12, 11),
-                Production.USA, List.of("actors"), "image", null, 7);
+                Production.USA, List.of("actors"), null, 7, new byte[100]);
 
         assertThrows(ValidationException.class, () -> movieService.update(1, movie));
     }
@@ -570,7 +570,7 @@ class MovieServiceTest {
     @Test
     void update_when_trailer_name_is_empty() {
         Movie movie = new Movie(1, "title", Genre.COMEDY, "desc", LocalDate.of(2021, 12, 11),
-                Production.USA, List.of("actors"), "image", "", 7);
+                Production.USA, List.of("actors"), "", 7, new byte[100]);
 
         assertThrows(ValidationException.class, () -> movieService.update(1, movie));
     }
@@ -578,7 +578,7 @@ class MovieServiceTest {
     @Test
     void update_when_trailer_link_is_not_valid() {
         Movie movie = new Movie(1, "title", Genre.COMEDY, "desc", LocalDate.of(2021, 12, 11),
-                Production.USA, List.of("actors"), "image", "not valid", 7);
+                Production.USA, List.of("actors"), "not valid", 7, new byte[100]);
 
         assertThrows(ValidationException.class, () -> movieService.update(1, movie));
     }
@@ -586,7 +586,7 @@ class MovieServiceTest {
     @Test
     void update_when_movie_not_found() {
         Movie movie = new Movie(1, "title", Genre.COMEDY, "desc", LocalDate.of(2021, 12, 11),
-                Production.USA, List.of("actors"), "image", "https://www.youtube.com/watch?v=kVrqfYjkTdQ&t=10s", 7);
+                Production.USA, List.of("actors"), "https://www.youtube.com/watch?v=kVrqfYjkTdQ&t=10s", 7, new byte[100]);
 
         when(movieRepository.show(1)).thenReturn(null);
 
@@ -596,7 +596,7 @@ class MovieServiceTest {
     @Test
     void update_check_call_repository_method() {
         Movie movie = new Movie(1, "title", Genre.COMEDY, "desc", LocalDate.of(2021, 12, 11),
-                Production.USA, List.of("actors"), "image", "https://www.youtube.com/watch?v=kVrqfYjkTdQ&t=10s", 7);
+                Production.USA, List.of("actors"), "https://www.youtube.com/watch?v=kVrqfYjkTdQ&t=10s", 7, new byte[100]);
 
         when(movieRepository.show(1)).thenReturn(movie);
 
@@ -608,7 +608,7 @@ class MovieServiceTest {
     @Test
     void success_update_movie() {
         Movie movie = new Movie(1, "title", Genre.COMEDY, "desc", LocalDate.of(2021, 12, 11),
-                Production.USA, List.of("actors"), "image", "https://www.youtube.com/watch?v=kVrqfYjkTdQ&t=10s", 7);
+                Production.USA, List.of("actors"), "https://www.youtube.com/watch?v=kVrqfYjkTdQ&t=10s", 7, new byte[100]);
 
         when(movieRepository.show(1)).thenReturn(movie);
 
