@@ -103,7 +103,7 @@ public class MovieController {
                               @RequestParam("actors") String actors,
                               @RequestParam("trailer") String trailerLink,
                               @RequestParam("image") MultipartFile multipartFile,
-                              @PathVariable("id") int id) throws IOException {
+                              @PathVariable("id") int id) {
 
         Movie movie = movieService.show(id);
         setMovieParams(title, description, release, country, genre, actors, trailerLink, multipartFile, movie);
@@ -129,7 +129,7 @@ public class MovieController {
                            @RequestParam("genre") String genre,
                            @RequestParam("actors") String actors,
                            @RequestParam("trailer") String trailerLink,
-                           @RequestParam("image") MultipartFile multipartFile) throws IOException {
+                           @RequestParam("image") MultipartFile multipartFile) {
 
         Movie movie = new Movie();
         setMovieParams(title, description, release, country, genre, actors, trailerLink, multipartFile, movie);
@@ -214,7 +214,7 @@ public class MovieController {
                                 @RequestParam("actors") String actors,
                                 @RequestParam("trailer") String trailerLink,
                                 @RequestParam("image") MultipartFile multipartFile,
-                                Movie movie) throws IOException {
+                                Movie movie) {
         movie.setTitle(title);
         movie.setDescription(description);
         movie.setGenre(Genre.valueOf(genre.toUpperCase(Locale.ROOT)));
