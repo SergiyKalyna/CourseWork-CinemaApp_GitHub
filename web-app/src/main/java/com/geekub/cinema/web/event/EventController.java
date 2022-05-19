@@ -1,5 +1,6 @@
 package com.geekub.cinema.web.event;
 
+import com.geekhub.event.Event;
 import com.geekhub.event.EventConverter;
 import com.geekhub.event.EventService;
 import com.geekhub.event.dto.EventCreationDto;
@@ -11,8 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -114,10 +117,12 @@ public class EventController {
 
     @PostMapping("/add/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public String addEvent(@PathVariable("id") int movieId,
+    public String addEvent(@Valid @ModelAttribute ("event")Event event,
+                           @PathVariable("id") int movieId,
                            @RequestParam("placeCost") String placeCost,
                            @RequestParam("cinemaHallId") String cinemaHallId,
-                           @RequestParam("time") String time) {
+                           @RequestParam("time") String time,
+                           BindingResult bindingResult) {
 
         EventCreationDto eventCreationDto = new EventCreationDto();
         eventCreationDto.setMovieId(movieId);

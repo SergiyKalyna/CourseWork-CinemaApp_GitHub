@@ -27,6 +27,9 @@ dependencies {
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+
+    implementation 'org.hibernate.validator:hibernate-validator:6.2.3.Final'
+    implementation 'javax.validation:validation-api:2.0.1.Final'
 }
 
 test {
