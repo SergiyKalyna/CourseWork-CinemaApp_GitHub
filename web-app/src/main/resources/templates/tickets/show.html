@@ -13,7 +13,6 @@
     </div>
     <table class="table center" border="1" style="border:1px solid black;margin-left:auto;margin-right:auto;">
         <tr>
-            <th>Id</th>
             <th>Movie name</th>
             <th>Time</th>
             <th>Places</th>
@@ -21,7 +20,6 @@
             <th>Download ticket</th>
         </tr>
         <tr th:each="ticket : ${tickets}">
-            <td th:text="${ticket.getId()}">...</td>
             <td th:text="${ticket.getMovieName()}">...</td>
             <td th:text="${ticket.getTime()}">...</td>
             <td th:text="${ticket.getPlaceQuantity()}">...</td>

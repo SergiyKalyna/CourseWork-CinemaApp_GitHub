@@ -1,11 +1,15 @@
 package com.geekub.cinema.web.ticket;
 
-import com.geekhub.cinemahall.CinemaHallService;
 import com.geekhub.event.Event;
+import com.geekhub.event.EventConverter;
 import com.geekhub.event.EventService;
+import com.geekhub.event.dto.EventDto;
+import com.geekhub.movie.MovieConverter;
 import com.geekhub.movie.MovieService;
-import com.geekhub.ticket.Ticket;
 import com.geekhub.ticket.TicketBookingService;
+import com.geekhub.ticket.TicketConverter;
+import com.geekhub.ticket.dto.TicketCreateDto;
+import com.geekhub.ticket.dto.TicketDto;
 import com.geekhub.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,20 +36,25 @@ public class BookTicketsController {
     private final TicketBookingService ticketBookingService;
     private final MovieService movieService;
     private final EventService eventService;
-    private final CinemaHallService cinemaHallService;
+    private final TicketConverter ticketConverter;
+    private final MovieConverter movieConverter;
+    private final EventConverter eventConverter;
 
-    public BookTicketsController(TicketBookingService ticketBookingService, MovieService movieService, EventService eventService, CinemaHallService cinemaHallService) {
+    public BookTicketsController(TicketBookingService ticketBookingService, MovieService movieService, EventService eventService, TicketConverter ticketConverter, MovieConverter movieConverter, EventConverter eventConverter) {
         this.ticketBookingService = ticketBookingService;
         this.movieService = movieService;
         this.eventService = eventService;
-        this.cinemaHallService = cinemaHallService;
+        this.ticketConverter = ticketConverter;
+        this.movieConverter = movieConverter;
+        this.eventConverter = eventConverter;
     }
 
     @GetMapping()
     @PreAuthorize("hasRole('USER')")
     public String getTickets(@AuthenticationPrincipal User user, Model model) {
-        model.addAttribute("tickets",
-                ticketBookingService.getTicketsByUserId(user.getId()));
+        List<TicketDto> ticketsDto =
+                ticketConverter.convertToListDto(ticketBookingService.getTicketsByUserId(user.getId()));
+        model.addAttribute("tickets", ticketsDto);
 
         return "tickets/show";
     }
@@ -62,10 +71,10 @@ public class BookTicketsController {
     @PreAuthorize("hasRole('USER')")
     public String bookTicket(@PathVariable("id") int movieId, Model model) {
 
-        model.addAttribute("movie", movieService.show(movieId));
+        model.addAttribute("movie", movieConverter.convertToDto(movieService.show(movieId)));
 
         List<Event> events = eventService.findEventsByMovieId(movieId);
-        List<Event> actualEvent = events
+        List<EventDto> actualEvent = eventConverter.convertListToDto(events)
                 .stream()
                 .filter(event -> event.getTime().isAfter(LocalDateTime.now()))
                 .collect(Collectors.toList());
@@ -83,18 +92,12 @@ public class BookTicketsController {
                             @RequestParam("place") String place,
                             @AuthenticationPrincipal User user) {
 
-        Event event = eventService.getEvent(eventId);
+        TicketCreateDto ticketDto = new TicketCreateDto();
+        ticketDto.setUserId(user.getId());
+        ticketDto.setPlaceQuantity(Integer.parseInt(place));
+        ticketDto.setEventId(eventId);
 
-        Ticket ticket = new Ticket();
-        ticket.setOwner(user.getFirstName() + " " + user.getSecondName());
-        ticket.setUserId(user.getId());
-        ticket.setPlaceQuantity(Integer.parseInt(place));
-        ticket.setTime(event.getTime());
-        ticket.setEventId(event.getId());
-        ticket.setHall(cinemaHallService.getHall(event.getCinemaHallId()).getName());
-        ticket.setMovieName(movieService.show(event.getMovieId()).getTitle());
-
-        ticketBookingService.bookTicket(ticket);
+        ticketBookingService.bookTicket(ticketConverter.convertFromDto(ticketDto));
 
         return "redirect:/tickets";
     }
@@ -104,7 +107,7 @@ public class BookTicketsController {
     public void downloadTicket(HttpServletResponse response,
                                @PathVariable("id") Long id) {
         ticketBookingService.downloadTicket(id);
-        Ticket ticket = ticketBookingService.getTicket(id);
+        TicketDto ticket = ticketConverter.convertToDto(ticketBookingService.getTicket(id));
         String fileName = ticket.getMovieName() + "_" + ticket.getTime() + "_ticket.txt";
         String filePath = "./ticket.txt";
 
@@ -116,7 +119,7 @@ public class BookTicketsController {
                 Files.copy(file, response.getOutputStream());
                 response.getOutputStream().flush();
             } catch (IOException ex) {
-               logger.error(ex.getMessage());
+                logger.error(ex.getMessage());
             }
         }
     }

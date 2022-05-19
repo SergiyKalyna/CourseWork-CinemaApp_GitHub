@@ -15,6 +15,7 @@ import com.geekhub.movie.MovieRowMapper;
 import com.geekhub.movie.MovieService;
 import com.geekhub.ticket.TicketBookingRepository;
 import com.geekhub.ticket.TicketBookingService;
+import com.geekhub.ticket.TicketConverter;
 import com.geekhub.ticket.TicketRowMapper;
 import com.geekhub.user.UserRowMapper;
 import com.geekhub.user.UserRepository;
@@ -128,12 +129,17 @@ public class AppConfig {
     }
 
     @Bean
-    public FeedbackConverter feedbackConverter (UserService userService){
+    public FeedbackConverter feedbackConverter(UserService userService) {
         return new FeedbackConverter(userService);
     }
 
     @Bean
-    public MovieConverter movieConverter (){
+    public MovieConverter movieConverter() {
         return new MovieConverter();
+    }
+
+    @Bean
+    public TicketConverter ticketConverter(MovieService movieService, CinemaHallService cinemaHallService, UserService userService, EventService eventService) {
+        return new TicketConverter(movieService, cinemaHallService, userService, eventService);
     }
 }

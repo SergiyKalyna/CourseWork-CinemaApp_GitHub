@@ -17,16 +17,17 @@
         </p>
         <br>
     </div>
-    <tr th:each="event : ${events}">
-        <form th:method="POST" th:action="@{/tickets/add/{id}(id=${event.getId()})}">
-            <table class="table center" border="1" style="border:1px solid black;margin-left:auto;margin-right:auto;">
-                <tr>
-                    <th>Time</th>
-                    <th>Free places</th>
-                    <th>Place cost</th>
-                    <th>Places to book</th>
-                    <th>Booking ticket</th>
-                </tr>
+
+    <table class="table center" border="1" style="border:1px solid black;margin-left:auto;margin-right:auto;">
+        <tr>
+            <th>Time</th>
+            <th>Free places</th>
+            <th>Place cost</th>
+            <th>Places to book</th>
+            <th>Booking ticket</th>
+        </tr>
+        <tr th:each="event : ${events}">
+            <form th:method="POST" th:action="@{/tickets/add/{id}(id=${event.getId()})}">
                 <td th:text="${event.getTime()}">...</td>
                 <td th:text="${event.getFreePlace()}">...</td>
                 <td th:text="${event.getPlaceCost()}">...</td>
@@ -47,9 +48,9 @@
                 <td>
                     <input type="submit" value="Book!"/>
                 </td>
-            </table>
-        </form>
-    </tr>
+            </form>
+        </tr>
+    </table>
     <a href="" th:href="@{/movies/}" class="btn btn-secondary mt-5"><- Return to movies menu</a>
 </div>
 </body>
