@@ -4,7 +4,9 @@ package com.geekub.cinema.web.user;
 import com.geekhub.exception.ValidationException;
 import com.geekhub.models.Gender;
 import com.geekhub.user.User;
+import com.geekhub.user.UserConverter;
 import com.geekhub.user.UserService;
+import com.geekhub.user.dto.UserDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,15 +24,18 @@ public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     private final UserService userService;
+    private final UserConverter userConverter;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserConverter userConverter) {
         this.userService = userService;
+        this.userConverter = userConverter;
     }
 
     @GetMapping("/profile")
     @PreAuthorize("hasRole('USER')")
     public String getProfile(@AuthenticationPrincipal User user, Model model) {
-        User profileUser = userService.findById(user.getId());
+        UserDto profileUser = userConverter.convertToDto(userService.findById(user.getId()));
+
         model.addAttribute("user", profileUser);
 
         return "user/profile";
@@ -39,14 +44,14 @@ public class UserController {
     @GetMapping("/{id}/edit_password")
     @PreAuthorize("hasRole('USER')")
     public String editPassword(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("user", userService.findById(id));
+        model.addAttribute("id", id);
         logger.info("Started operation for edit password for user with id -" + id);
         return "user/edit-password";
     }
 
     @PostMapping("/{id}/update_password")
     @PreAuthorize("hasRole('USER')")
-    public String update(@RequestParam("oldPassword") String oldPassword,
+    public String updatePassword(@RequestParam("oldPassword") String oldPassword,
                          @RequestParam("newPassword") String newPassword,
                          @RequestParam("confirmPassword") String confirmPassword,
                          @PathVariable("id") Long id) {
@@ -61,7 +66,9 @@ public class UserController {
     @GetMapping("/{id}/edit")
     @PreAuthorize("hasRole('USER')")
     public String edit(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("user", userService.findById(id));
+        UserDto userToEdit = userConverter.convertToDto(userService.findById(id));
+
+        model.addAttribute("user", userToEdit);
         logger.info("Started operation for edit profile of user with id -" + id);
 
         return "user/edit";
@@ -75,14 +82,14 @@ public class UserController {
                          @RequestParam("birthdayDate") String birthdayDate,
                          @PathVariable("id") Long id) {
 
-        User user = userService.findById(id);
+        UserDto user = userConverter.convertToDto(userService.findById(id));
         user.setFirstName(firstName);
         user.setSecondName(secondName);
         user.setGender(Gender.valueOf(gender.toUpperCase(Locale.ROOT)));
         user.setBirthdayDate(LocalDate.parse(birthdayDate));
 
 
-        userService.updateUser(id, user);
+        userService.updateUser(id, userConverter.convertFromUserDto(user));
         return "redirect:/user/profile";
     }
 }

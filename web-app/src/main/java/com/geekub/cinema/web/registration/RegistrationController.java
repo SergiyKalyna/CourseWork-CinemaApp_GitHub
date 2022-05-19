@@ -2,8 +2,9 @@ package com.geekub.cinema.web.registration;
 
 import com.geekhub.exception.ValidationException;
 import com.geekhub.models.Gender;
-import com.geekhub.user.User;
+import com.geekhub.user.UserConverter;
 import com.geekhub.user.UserService;
+import com.geekhub.user.dto.UserCreateDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -18,14 +19,15 @@ public class RegistrationController {
     private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
 
     private final UserService userService;
+    private final UserConverter userConverter;
 
-    public RegistrationController(UserService userService) {
+    public RegistrationController(UserService userService, UserConverter userConverter) {
         this.userService = userService;
+        this.userConverter = userConverter;
     }
 
-
     @GetMapping
-    public String doRegister(@ModelAttribute ("user") User user) {
+    public String doRegister(@ModelAttribute ("user") UserCreateDto user) {
         logger.info("User registration operation started");
         return "registration/registration";
     }
@@ -43,7 +45,7 @@ public class RegistrationController {
             throw new ValidationException("New password and confirmation password do not match");
         }
 
-        User user = new User();
+        UserCreateDto user = new UserCreateDto();
         user.setLogin(login);
         user.setPassword(password);
         user.setFirstName(firstName);
@@ -51,7 +53,7 @@ public class RegistrationController {
         user.setGender(Gender.valueOf(gender.toUpperCase(Locale.ROOT)));
         user.setBirthdayDate(LocalDate.parse(birthdayDate));
 
-        userService.saveUser(user);
+        userService.saveUser(userConverter.convertFromUserCreateDto(user));
 
         return "redirect:/menu";
     }
