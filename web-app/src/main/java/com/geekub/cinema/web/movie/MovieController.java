@@ -10,7 +10,10 @@ import com.geekhub.models.Genre;
 import com.geekhub.models.Production;
 import com.geekhub.models.Role;
 import com.geekhub.movie.Movie;
+import com.geekhub.movie.MovieConverter;
 import com.geekhub.movie.MovieService;
+import com.geekhub.movie.dto.MovieCreateDto;
+import com.geekhub.movie.dto.MovieDto;
 import com.geekhub.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,11 +39,13 @@ public class MovieController {
     private final MovieService movieService;
     private final FeedbackService feedbackService;
     private final FeedbackConverter feedbackConverter;
+    private final MovieConverter movieConverter;
 
-    public MovieController(MovieService movieService, FeedbackService feedbackService, FeedbackConverter feedbackConverter) {
+    public MovieController(MovieService movieService, FeedbackService feedbackService, FeedbackConverter feedbackConverter, MovieConverter movieConverter) {
         this.movieService = movieService;
         this.feedbackService = feedbackService;
         this.feedbackConverter = feedbackConverter;
+        this.movieConverter = movieConverter;
     }
 
     @GetMapping()
@@ -69,7 +74,7 @@ public class MovieController {
         List<FeedbackDto> feedbacks =
                 feedbackConverter.convertToListDto(feedbackService.showAllByFilmId(id));
 
-        model.addAttribute("movie", movieService.show(id));
+        model.addAttribute("movie", movieConverter.convertToMovieDto(movieService.show(id)));
         model.addAttribute("feedbacks", feedbacks);
         model.addAttribute("checkUserRights", user.getRole().equals(Role.ADMIN));
 
@@ -87,7 +92,7 @@ public class MovieController {
     @GetMapping("/{id}/edit")
     @PreAuthorize("hasRole('ADMIN')")
     public String editMovie(Model model, @PathVariable("id") int id) {
-        model.addAttribute("movie", movieService.show(id));
+        model.addAttribute("movie", movieConverter.covertToMovieCreateDto(movieService.show(id)));
         logger.info("Started operation of edit movie with id - " + id);
 
         return "movies/edit";
@@ -105,17 +110,17 @@ public class MovieController {
                               @RequestParam("image") MultipartFile multipartFile,
                               @PathVariable("id") int id) {
 
-        Movie movie = movieService.show(id);
+        MovieCreateDto movie = movieConverter.covertToMovieCreateDto(movieService.show(id));
         setMovieParams(title, description, release, country, genre, actors, trailerLink, multipartFile, movie);
 
-        movieService.update(id, movie);
+        movieService.update(id, movieConverter.convertFromDto(movie));
 
         return "redirect:/movies/" + id;
     }
 
     @GetMapping("/create-movie")
     @PreAuthorize("hasRole('ADMIN')")
-    public String createMovie(@ModelAttribute("movie") Movie movie) {
+    public String createMovie(@ModelAttribute("movie") MovieCreateDto movie) {
         logger.info("Started operation of add new movie");
         return "movies/create";
     }
@@ -131,10 +136,10 @@ public class MovieController {
                            @RequestParam("trailer") String trailerLink,
                            @RequestParam("image") MultipartFile multipartFile) {
 
-        Movie movie = new Movie();
+        MovieCreateDto movie = new MovieCreateDto();
         setMovieParams(title, description, release, country, genre, actors, trailerLink, multipartFile, movie);
 
-        movieService.create(movie);
+        movieService.create(movieConverter.convertFromDto(movie));
 
         return "redirect:/movies";
     }
@@ -144,7 +149,8 @@ public class MovieController {
     public String showMoviesSortedByGenre(@AuthenticationPrincipal User user,
                                           @RequestParam("genre") String genre,
                                           Model model) {
-        model.addAttribute("movies", movieService.showSortedByGenre(genre));
+        List<MovieDto> moviesDto = movieConverter.convertToListDto(movieService.showSortedByGenre(genre));
+        model.addAttribute("movies", moviesDto);
         model.addAttribute("checkUserRights", user.getRole().equals(Role.ADMIN));
 
         return "movies/sorted-by-parameters";
@@ -155,7 +161,8 @@ public class MovieController {
     public String showMoviesSortedByCountry(@AuthenticationPrincipal User user,
                                             @RequestParam("country") String country,
                                             Model model) {
-        model.addAttribute("movies", movieService.showSortedByCountry(country));
+        List<MovieDto> moviesDto = movieConverter.convertToListDto(movieService.showSortedByCountry(country));
+        model.addAttribute("movies", moviesDto);
         model.addAttribute("checkUserRights", user.getRole().equals(Role.ADMIN));
 
         return "movies/sorted-by-parameters";
@@ -200,7 +207,8 @@ public class MovieController {
     public String showMoviesByKeyword(@AuthenticationPrincipal User user,
                                       @RequestParam("keyword") String keyword,
                                       Model model) {
-        model.addAttribute("movies", movieService.search(keyword));
+        List<MovieDto> moviesDto = movieConverter.convertToListDto(movieService.search(keyword));
+        model.addAttribute("movies", moviesDto);
         model.addAttribute("checkUserRights", user.getRole().equals(Role.ADMIN));
 
         return "movies/sorted-by-parameters";
@@ -214,7 +222,7 @@ public class MovieController {
                                 @RequestParam("actors") String actors,
                                 @RequestParam("trailer") String trailerLink,
                                 @RequestParam("image") MultipartFile multipartFile,
-                                Movie movie) {
+                                MovieCreateDto movie) {
         movie.setTitle(title);
         movie.setDescription(description);
         movie.setGenre(Genre.valueOf(genre.toUpperCase(Locale.ROOT)));
@@ -240,7 +248,7 @@ public class MovieController {
                                  Page<Movie> moviePages, int currentPage) {
         int totalPages = moviePages.getTotalPages();
         long totalItems = moviePages.getTotalElements();
-        List<Movie> movies = moviePages.getContent();
+        List<MovieDto> movies = movieConverter.convertToListDto(moviePages.getContent());
 
         if (currentPage > totalPages || currentPage <= 0) {
             throw new MovieNotFoundException("Page index must not be more than total pages!");

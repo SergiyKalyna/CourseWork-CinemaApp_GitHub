@@ -1,6 +1,7 @@
 package com.geekub.cinema.web.menu;
 
 import com.geekhub.models.Role;
+import com.geekhub.movie.MovieConverter;
 import com.geekhub.movie.MovieService;
 import com.geekhub.user.User;
 import org.slf4j.Logger;
@@ -17,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainMenuController {
     private static final Logger logger = LoggerFactory.getLogger(MainMenuController.class);
     private final MovieService movieService;
+    private final MovieConverter movieConverter;
 
-    public MainMenuController(MovieService movieService) {
+    public MainMenuController(MovieService movieService, MovieConverter movieConverter) {
         this.movieService = movieService;
+        this.movieConverter = movieConverter;
     }
 
     @GetMapping
@@ -33,7 +36,7 @@ public class MainMenuController {
     @GetMapping("/menu")
     @PreAuthorize("hasRole('USER')")
     public String showMenu(@AuthenticationPrincipal User user, Model model) {
-        model.addAttribute("movies", movieService.showLast3Movies());
+        model.addAttribute("movies", movieConverter.convertToListDto(movieService.showLast3Movies()));
         logger.info("Showed main menu page");
 
         model.addAttribute("checkUserRights", user.getRole().equals(Role.ADMIN));

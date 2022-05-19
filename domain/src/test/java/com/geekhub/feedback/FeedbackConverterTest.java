@@ -58,6 +58,7 @@ class FeedbackConverterTest {
 
         assertThat(feedbackDto).extracting(FeedbackDto::getFeedback).isEqualTo(feedback.getFeedback());
         assertThat(feedbackDto).extracting(FeedbackDto::getId).isEqualTo(feedback.getId());
+        assertThat(feedbackDto).extracting(FeedbackDto::getTime).isEqualTo(feedback.getTime());
         assertThat(feedbackDto).extracting(FeedbackDto::getUserName).isEqualTo(userName);
     }
 

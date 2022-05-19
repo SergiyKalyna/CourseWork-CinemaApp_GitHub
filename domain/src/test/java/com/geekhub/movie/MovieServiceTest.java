@@ -616,7 +616,7 @@ class MovieServiceTest {
     }
 
     @Test
-    void getImage_call_checked_method(){
+    void getImage_call_checked_method() {
         Movie movie = new Movie(1, "title", Genre.COMEDY, "desc", LocalDate.of(2021, 12, 11),
                 Production.USA, List.of("actors"), "https://www.youtube.com/watch?v=kVrqfYjkTdQ&t=10s", 7, new byte[100]);
 
@@ -628,14 +628,14 @@ class MovieServiceTest {
     }
 
     @Test
-    void getImage_when_movie_not_found(){
+    void getImage_when_movie_not_found() {
         when(movieRepository.show(1)).thenReturn(null);
 
-       assertThrows(MovieNotFoundException.class, ()-> movieService.getImageBytes(1));
+        assertThrows(MovieNotFoundException.class, () -> movieService.getImageBytes(1));
     }
 
     @Test
-    void getImage_check_repository_method(){
+    void getImage_check_repository_method() {
         Movie movie = new Movie(1, "title", Genre.COMEDY, "desc", LocalDate.of(2021, 12, 11),
                 Production.USA, List.of("actors"), "https://www.youtube.com/watch?v=kVrqfYjkTdQ&t=10s", 7, new byte[100]);
 
@@ -647,12 +647,12 @@ class MovieServiceTest {
     }
 
     @Test
-    void getImage_success_get_bytes(){
+    void getImage_success_get_bytes() {
         Movie movie = new Movie(1, "title", Genre.COMEDY, "desc", LocalDate.of(2021, 12, 11),
                 Production.USA, List.of("actors"), "https://www.youtube.com/watch?v=kVrqfYjkTdQ&t=10s", 7, new byte[100]);
 
         when(movieRepository.show(1)).thenReturn(movie);
 
-       assertDoesNotThrow(()->movieService.getImageBytes(1));
+        assertDoesNotThrow(() -> movieService.getImageBytes(1));
     }
 }

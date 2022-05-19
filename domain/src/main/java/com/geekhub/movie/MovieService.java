@@ -105,7 +105,7 @@ public class MovieService {
         return movieRepository.showAllLastMovie();
     }
 
-    public byte[] getImageBytes(int movieId){
+    public byte[] getImageBytes(int movieId) {
         if (movieRepository.show(movieId) == null) {
             throw new MovieNotFoundException(movieId);
         }
