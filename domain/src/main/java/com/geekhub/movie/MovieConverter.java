@@ -2,6 +2,7 @@ package com.geekhub.movie;
 
 import com.geekhub.movie.dto.MovieCreateDto;
 import com.geekhub.movie.dto.MovieDto;
+import com.geekhub.movie.dto.MovieDtoForEvent;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,7 +41,7 @@ public class MovieConverter {
         return movieDto;
     }
 
-    public MovieCreateDto covertToMovieCreateDto(Movie movie) {
+    public MovieCreateDto convertToMovieCreateDto(Movie movie) {
         MovieCreateDto movieDto = new MovieCreateDto();
         movieDto.setId(movie.getId());
         movieDto.setTitle(movie.getTitle());
@@ -54,6 +55,14 @@ public class MovieConverter {
         movieDto.setAverageRating(movie.getAverageRating());
 
         return movieDto;
+    }
+
+    public MovieDtoForEvent convertToDto(Movie movie){
+        MovieDtoForEvent movieDtoForEvent = new MovieDtoForEvent();
+        movieDtoForEvent.setId(movie.getId());
+        movieDtoForEvent.setTitle(movie.getTitle());
+
+        return movieDtoForEvent;
     }
 
     public List<MovieDto> convertToListDto(List<Movie> movies) {

@@ -3,6 +3,7 @@ package com.geekub.cinema.web.event;
 import com.geekhub.event.EventConverter;
 import com.geekhub.event.EventService;
 import com.geekhub.event.dto.EventCreationDto;
+import com.geekhub.movie.MovieConverter;
 import com.geekhub.movie.MovieService;
 import com.geekhub.ticket.TicketBookingService;
 import org.slf4j.Logger;
@@ -25,12 +26,14 @@ public class EventController {
     private final MovieService movieService;
     private final TicketBookingService ticketBookingService;
     private final EventConverter eventConverter;
+    private final MovieConverter movieConverter;
 
-    public EventController(EventService eventService, MovieService movieService, TicketBookingService ticketBookingService, EventConverter eventConverter) {
+    public EventController(EventService eventService, MovieService movieService, TicketBookingService ticketBookingService, EventConverter eventConverter, MovieConverter movieConverter) {
         this.eventService = eventService;
         this.movieService = movieService;
         this.ticketBookingService = ticketBookingService;
         this.eventConverter = eventConverter;
+        this.movieConverter = movieConverter;
     }
 
     @GetMapping
@@ -101,7 +104,7 @@ public class EventController {
                 LocalTime.of(LocalTime.now().getHour(), LocalTime.now().getMinute(), 0));
 
         model.addAttribute("event", new EventCreationDto());
-        model.addAttribute("movie", movieService.show(movieId));
+        model.addAttribute("movie", movieConverter.convertToDto(movieService.show(movieId)));
         model.addAttribute("dateTimeNow", localDateTimeNow);
 
         logger.info("Started operation of create event to movie with id - " + movieId);

@@ -92,7 +92,7 @@ public class MovieController {
     @GetMapping("/{id}/edit")
     @PreAuthorize("hasRole('ADMIN')")
     public String editMovie(Model model, @PathVariable("id") int id) {
-        model.addAttribute("movie", movieConverter.covertToMovieCreateDto(movieService.show(id)));
+        model.addAttribute("movie", movieConverter.convertToMovieCreateDto(movieService.show(id)));
         logger.info("Started operation of edit movie with id - " + id);
 
         return "movies/edit";
@@ -110,7 +110,7 @@ public class MovieController {
                               @RequestParam("image") MultipartFile multipartFile,
                               @PathVariable("id") int id) {
 
-        MovieCreateDto movie = movieConverter.covertToMovieCreateDto(movieService.show(id));
+        MovieCreateDto movie = movieConverter.convertToMovieCreateDto(movieService.show(id));
         setMovieParams(title, description, release, country, genre, actors, trailerLink, multipartFile, movie);
 
         movieService.update(id, movieConverter.convertFromDto(movie));
