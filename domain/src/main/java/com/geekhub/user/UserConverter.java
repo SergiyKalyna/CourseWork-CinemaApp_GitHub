@@ -31,8 +31,6 @@ public class UserConverter {
         user.setPassword(userCreateDto.getPassword());
         user.setFirstName(userCreateDto.getFirstName());
         user.setSecondName(userCreateDto.getSecondName());
-        user.setGender(userCreateDto.getGender());
-        user.setBirthdayDate(userCreateDto.getBirthdayDate());
 
         return user;
     }

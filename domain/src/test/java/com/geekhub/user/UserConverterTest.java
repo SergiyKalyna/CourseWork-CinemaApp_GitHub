@@ -48,14 +48,14 @@ class UserConverterTest {
 
     @Test
     void convertFromUserCreateDto_check_to_right_convert() {
-        UserCreateDto userCreateDto = new UserCreateDto("name", "password", "first name",
-                "second name", Gender.MALE, LocalDate.now());
+        UserCreateDto userCreateDto = new UserCreateDto("name", "password",
+                "confirm password", "first name", "second name");
 
         User user = userConverter.convertFromUserCreateDto(userCreateDto);
 
         assertThat(user).extracting(User::getPassword).isEqualTo(userCreateDto.getPassword());
-        assertThat(user).extracting(User::getBirthdayDate).isEqualTo(userCreateDto.getBirthdayDate());
-        assertThat(user).extracting(User::getGender).isEqualTo(userCreateDto.getGender());
+        assertThat(user).extracting(User::getLogin).isEqualTo(userCreateDto.getLogin());
+        assertThat(user).extracting(User::getFirstName).isEqualTo(userCreateDto.getFirstName());
     }
 
     @Test

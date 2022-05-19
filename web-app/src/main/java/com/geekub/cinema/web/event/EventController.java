@@ -117,12 +117,10 @@ public class EventController {
 
     @PostMapping("/add/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public String addEvent(@Valid @ModelAttribute ("event")Event event,
-                           @PathVariable("id") int movieId,
+    public String addEvent(@PathVariable("id") int movieId,
                            @RequestParam("placeCost") String placeCost,
                            @RequestParam("cinemaHallId") String cinemaHallId,
-                           @RequestParam("time") String time,
-                           BindingResult bindingResult) {
+                           @RequestParam("time") String time) {
 
         EventCreationDto eventCreationDto = new EventCreationDto();
         eventCreationDto.setMovieId(movieId);
