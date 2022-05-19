@@ -1,7 +1,7 @@
 package com.geekhub.user.dto;
 
 import com.geekhub.models.Gender;
-import com.geekhub.models.Role;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +9,7 @@ import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserCreateDto {
 
     private String login;
