@@ -1,5 +1,6 @@
 package com.geekub.cinema.web.hall;
 
+import com.geekhub.cinemahall.CinemaHall;
 import com.geekhub.cinemahall.CinemaHallConverter;
 import com.geekhub.cinemahall.dto.CinemaHallDto;
 import com.geekhub.cinemahall.CinemaHallService;
@@ -28,7 +29,9 @@ public class HallController {
     @GetMapping()
     @PreAuthorize("hasRole('ADMIN')")
     public String showHalls(Model model) {
-        List<CinemaHallDto> halls = cinemaHallConverter.convertListToDto(cinemaHallService.getAllHalls());
+        List<CinemaHall> cinemaHalls = cinemaHallService.getAllHalls();
+        List<CinemaHallDto> halls = cinemaHallConverter.convertListToDto(cinemaHalls);
+
         model.addAttribute("halls", halls);
 
         return "hall/all-halls";
@@ -49,8 +52,9 @@ public class HallController {
     @PreAuthorize("hasRole('ADMIN')")
     public String updateHall(@ModelAttribute("cinemaHall") CinemaHallDto cinemaHall,
                              @PathVariable("id") int id) {
+        CinemaHall hall = cinemaHallConverter.convertFromDto(cinemaHall);
 
-        cinemaHallService.updateHall(id, cinemaHallConverter.convertFromDto(cinemaHall));
+        cinemaHallService.updateHall(id, hall);
 
         return "redirect:/halls";
     }
