@@ -40,7 +40,7 @@ public class RegistrationController {
                           @RequestParam("gender") String gender,
                           @RequestParam("birthdayDate") String birthdayDate) {
 
-        checkPassword(userDto.getPassword(), userDto.getConfirmPassword(), bindingResult);
+        userService.checkPassword(userDto.getPassword(), userDto.getConfirmPassword(), bindingResult);
         if (bindingResult.hasErrors()) {
             return "registration/registration";
         }
@@ -52,13 +52,6 @@ public class RegistrationController {
         userService.saveUser(user);
 
         return "redirect:/menu";
-    }
-
-    private void checkPassword(String password, String confirmPassword, BindingResult bindingResult) {
-        if (!password.equals(confirmPassword)) {
-            bindingResult.rejectValue("confirmPassword", "error.user",
-                    "New password and confirmation password do not match");
-        }
     }
 }
 

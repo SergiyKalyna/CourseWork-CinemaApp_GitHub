@@ -8,6 +8,7 @@ import com.geekhub.models.Role;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.validation.BindingResult;
 
 import java.util.List;
 import java.util.Optional;
@@ -104,6 +105,13 @@ public class UserService {
             throw new ValidationException("Was not choice gender field");
         } else if (user.getBirthdayDate() == null) {
             throw new ValidationException("Was fill birthday date field");
+        }
+    }
+
+    public void checkPassword(String password, String confirmPassword, BindingResult bindingResult) {
+        if (!password.equals(confirmPassword)) {
+            bindingResult.rejectValue("confirmPassword", "error.user",
+                    "New password and confirmation password do not match");
         }
     }
 }

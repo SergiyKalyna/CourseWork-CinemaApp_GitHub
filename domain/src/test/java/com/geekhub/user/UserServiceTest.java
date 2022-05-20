@@ -11,18 +11,22 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.validation.BindingResult;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
+
+    @Autowired
+    BindingResult bindingResult;
 
     @Mock
     UserRepository userRepository;
@@ -590,6 +594,30 @@ class UserServiceTest {
         when(bCryptPasswordEncoder.matches(oldPassword, user.getPassword())).thenReturn(true);
 
         assertDoesNotThrow(() -> userService.changePassword(userId, oldPassword, newPassword));
+    }
+
+    @Test
+    void checkPassword_if_different_pass() {
+        String password = "pass";
+        String confirmPassword = "password";
+        bindingResult = mock(BindingResult.class);
+
+        userService.checkPassword(password, confirmPassword, bindingResult);
+
+        verify(bindingResult).rejectValue(
+                "confirmPassword",
+                "error.user",
+                "New password and confirmation password do not match"
+        );
+    }
+
+    @Test
+    void password_is_equals() {
+        String password = "password";
+        String confirmPassword = "password";
+        bindingResult = mock(BindingResult.class);
+
+        assertDoesNotThrow(() -> userService.checkPassword(password, confirmPassword, bindingResult));
     }
 }
 
