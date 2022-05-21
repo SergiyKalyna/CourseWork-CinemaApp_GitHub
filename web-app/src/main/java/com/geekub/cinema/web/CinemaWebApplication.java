@@ -12,4 +12,3 @@ public class CinemaWebApplication {
         SpringApplication.run(CinemaWebApplication.class, args);
     }
 }
-

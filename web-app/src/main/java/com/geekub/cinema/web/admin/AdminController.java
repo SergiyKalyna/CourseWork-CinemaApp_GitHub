@@ -2,7 +2,6 @@ package com.geekub.cinema.web.admin;
 
 import com.geekhub.models.Gender;
 import com.geekhub.models.Role;
-import com.geekhub.user.User;
 import com.geekhub.user.UserConverter;
 import com.geekhub.user.UserService;
 import com.geekhub.user.dto.UserDto;
