@@ -1,6 +1,5 @@
 package com.geekub.cinema.web.event;
 
-import com.geekhub.event.Event;
 import com.geekhub.event.EventConverter;
 import com.geekhub.event.EventService;
 import com.geekhub.event.dto.EventCreationDto;
@@ -12,10 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -60,11 +57,11 @@ public class EventController {
 
     @GetMapping("/{id}/edit")
     @PreAuthorize("hasRole('ADMIN')")
-    public String editEvent(@PathVariable("id") String id, Model model) {
+    public String editEvent(@PathVariable("id") Long id, Model model) {
         LocalDateTime localDateTimeNow = LocalDateTime.of(LocalDate.now(),
                 LocalTime.of(LocalTime.now().getHour(), LocalTime.now().getMinute(), 0));
         EventCreationDto eventCreationDto =
-                eventConverter.convertToEventCreationDto(eventService.getEvent(Long.valueOf(id)));
+                eventConverter.convertToEventCreationDto(eventService.getEvent(id));
 
         model.addAttribute("dateTimeNow", localDateTimeNow);
         model.addAttribute("event", eventCreationDto);
