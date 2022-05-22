@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class UserConverter {
 
-    public UserDto convertToDto(User user){
+    public UserDto convertToDto(User user) {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setRole(user.getRole());
@@ -21,11 +21,11 @@ public class UserConverter {
         return userDto;
     }
 
-    public List<UserDto> convertToListDto(List<User> users){
+    public List<UserDto> convertToListDto(List<User> users) {
         return users.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-    public User convertFromUserCreateDto(UserCreateDto userCreateDto){
+    public User convertFromUserCreateDto(UserCreateDto userCreateDto) {
         User user = new User();
         user.setLogin(userCreateDto.getLogin());
         user.setPassword(userCreateDto.getPassword());
@@ -35,7 +35,7 @@ public class UserConverter {
         return user;
     }
 
-    public User convertFromUserDto(UserDto userDto){
+    public User convertFromUserDto(UserDto userDto) {
         User user = new User();
         user.setId(userDto.getId());
         user.setRole(userDto.getRole());

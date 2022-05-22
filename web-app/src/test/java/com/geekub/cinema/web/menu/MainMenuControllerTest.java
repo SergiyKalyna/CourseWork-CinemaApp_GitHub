@@ -4,20 +4,17 @@ import com.geekhub.models.Gender;
 import com.geekhub.models.Genre;
 import com.geekhub.models.Production;
 import com.geekhub.models.Role;
-import com.geekhub.movie.Movie;
 import com.geekhub.movie.MovieConverter;
 import com.geekhub.movie.MovieService;
 import com.geekhub.movie.dto.MovieDto;
 import com.geekhub.user.User;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
@@ -29,7 +26,6 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @WithMockUser(username = "admin", roles = "ADMIN")
@@ -62,7 +58,7 @@ class MainMenuControllerTest {
         when(movieConverter.convertToListDto(movieService.showLast3Movies())).thenReturn(List.of(movie));
 
         mockMvc.perform(get("/menu")
-                        .with(user(new User(1L,"login","password", Role.USER, "first name",
+                        .with(user(new User(1L, "login", "password", Role.USER, "first name",
                                 "second name", Gender.MALE, LocalDate.now()))))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))

@@ -2,38 +2,27 @@ package com.geekub.cinema.web.registration;
 
 import com.geekhub.models.Gender;
 import com.geekhub.models.Role;
-import com.geekhub.movie.MovieService;
 import com.geekhub.user.User;
 import com.geekhub.user.UserConverter;
 import com.geekhub.user.UserService;
 import com.geekhub.user.dto.UserCreateDto;
-import com.geekub.cinema.web.movie.MovieController;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.validation.BindingResult;
 
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @WithMockUser(username = "admin", roles = "ADMIN")
@@ -91,7 +80,7 @@ class RegistrationControllerTest {
 
     @Test
     void addUser_check_call_service_to_create() throws Exception {
-        UserCreateDto userDto = new UserCreateDto("login","password", "password", "first name",
+        UserCreateDto userDto = new UserCreateDto("login", "password", "password", "first name",
                 "second name");
         User user = new User(1L, "login", "password", Role.USER, "first name",
                 "second name", Gender.MALE, LocalDate.now());

@@ -54,14 +54,14 @@ class CinemaHallConverterTest {
     }
 
     @Test
-    void convertList_check_return_right_list(){
+    void convertList_check_return_right_list() {
         CinemaHall hall = new CinemaHall(1, "Name", 30);
         List<CinemaHall> halls = List.of(hall);
 
         List<CinemaHallDto> dtos = cinemaHallConverter.convertListToDto(halls);
 
         assertNotNull(dtos);
-        assertEquals(1,dtos.size());
+        assertEquals(1, dtos.size());
         assertThat(dtos.get(0).getName()).isEqualTo(hall.getName());
     }
 

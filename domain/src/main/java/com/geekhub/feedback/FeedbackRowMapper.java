@@ -14,7 +14,7 @@ public class FeedbackRowMapper implements RowMapper<Feedback> {
         String time = rs.getString("time");
         return new Feedback(
                 rs.getLong("id"),
-                LocalDateTime.parse(time.substring(0,time.length()-10)),
+                LocalDateTime.parse(time.substring(0, time.length() - 10)),
                 rs.getInt("movie_id"),
                 rs.getLong("user_id"),
                 rs.getString("name"),

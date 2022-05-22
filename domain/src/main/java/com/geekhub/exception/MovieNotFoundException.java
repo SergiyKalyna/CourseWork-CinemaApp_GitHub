@@ -13,7 +13,7 @@ public class MovieNotFoundException extends RuntimeException {
     }
 
     public MovieNotFoundException(String cause) {
-        super(format("Movies was not found. Cause [%s]",cause));
+        super(format("Movies was not found. Cause [%s]", cause));
     }
 }
 

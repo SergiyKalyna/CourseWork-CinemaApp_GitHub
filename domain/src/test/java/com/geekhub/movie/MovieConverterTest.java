@@ -79,7 +79,7 @@ class MovieConverterTest {
         List<MovieDto> moviesDto = movieConverter.convertToListDto(movies);
 
         assertNotNull(moviesDto);
-        assertEquals(1,moviesDto.size());
+        assertEquals(1, moviesDto.size());
         assertThat(moviesDto.get(0)).extracting(MovieDto::getId).isEqualTo(movie.getId());
         assertThat(moviesDto.get(0)).extracting(MovieDto::getImageFile).isEqualTo(movie.getImageFile());
         assertThat(moviesDto.get(0)).extracting(MovieDto::getTrailer).isEqualTo(movie.getTrailer());

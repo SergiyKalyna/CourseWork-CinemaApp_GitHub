@@ -44,7 +44,7 @@ public class CinemaHallService {
 
     public int getHallPlaces(int hallId) {
         CinemaHall cinemaHall = cinemaHallRepository.getById(hallId);
-        if ( cinemaHall== null) {
+        if (cinemaHall == null) {
             throw new CinemaHallNotFoundException(hallId);
         }
         logger.info("Showed hall capacity");

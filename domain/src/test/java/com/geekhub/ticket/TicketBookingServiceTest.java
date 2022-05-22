@@ -275,7 +275,7 @@ class TicketBookingServiceTest {
     }
 
     @Test
-    void deleteByEventId_check_call_repository(){
+    void deleteByEventId_check_call_repository() {
         ticketBookingService.deleteByEventId(1L);
 
         verify(ticketBookingRepository).deleteTicketByEventId(1L);

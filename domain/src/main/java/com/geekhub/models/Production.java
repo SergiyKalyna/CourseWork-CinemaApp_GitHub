@@ -5,12 +5,12 @@ import lombok.Getter;
 @Getter
 public enum Production {
     USA("USA"),
-    BELGIUM ("Belgium"),
-    ITALY ("Italy"),
-    UKRAINE ("Ukraine"),
-    GERMANY ("Germany"),
-    SPAIN ("Spain"),
-    FRANCE ("France");
+    BELGIUM("Belgium"),
+    ITALY("Italy"),
+    UKRAINE("Ukraine"),
+    GERMANY("Germany"),
+    SPAIN("Spain"),
+    FRANCE("France");
 
     private final String production;
 

@@ -18,7 +18,7 @@ public class EventConverter {
         this.cinemaHallService = cinemaHallService;
     }
 
-    public Event convertFromDto(EventCreationDto eventDto){
+    public Event convertFromDto(EventCreationDto eventDto) {
         Event event = new Event();
         event.setId(eventDto.getId());
         event.setTime(eventDto.getTime());
@@ -30,7 +30,7 @@ public class EventConverter {
         return event;
     }
 
-    public EventDto convertToEventDto(Event event){
+    public EventDto convertToEventDto(Event event) {
         EventDto eventDto = new EventDto();
         eventDto.setId(event.getId());
         eventDto.setTime(event.getTime());
@@ -42,7 +42,7 @@ public class EventConverter {
         return eventDto;
     }
 
-    public EventCreationDto convertToEventCreationDto(Event event){
+    public EventCreationDto convertToEventCreationDto(Event event) {
         EventCreationDto eventCreationDto = new EventCreationDto();
         eventCreationDto.setId(event.getId());
         eventCreationDto.setTime(event.getTime());
@@ -54,7 +54,7 @@ public class EventConverter {
         return eventCreationDto;
     }
 
-    public List<EventDto> convertListToDto(List<Event> events){
+    public List<EventDto> convertListToDto(List<Event> events) {
         return events.stream().map(this::convertToEventDto).collect(Collectors.toList());
     }
 }

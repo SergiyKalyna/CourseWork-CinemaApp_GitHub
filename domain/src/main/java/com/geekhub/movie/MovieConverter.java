@@ -57,7 +57,7 @@ public class MovieConverter {
         return movieDto;
     }
 
-    public MovieDtoForEvent convertToDto(Movie movie){
+    public MovieDtoForEvent convertToDto(Movie movie) {
         MovieDtoForEvent movieDtoForEvent = new MovieDtoForEvent();
         movieDtoForEvent.setId(movie.getId());
         movieDtoForEvent.setTitle(movie.getTitle());
