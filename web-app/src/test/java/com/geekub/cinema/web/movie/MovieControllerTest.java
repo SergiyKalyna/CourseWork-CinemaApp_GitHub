@@ -219,6 +219,8 @@ class MovieControllerTest {
                         .param("image", "image"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/movies"));
+
+        verify(movieService).create(movieConverter.convertFromDto(new MovieCreateDto()));
     }
 
     @Test
