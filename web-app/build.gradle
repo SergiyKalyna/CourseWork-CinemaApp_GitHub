@@ -10,6 +10,8 @@ repositories {
     mavenCentral()
 }
 
+apply plugin: 'checkstyle'
+
 dependencies {
     implementation project(':domain')
 
@@ -35,4 +37,12 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+checkstyleMain{
+    source = 'src/main/java'
+}
+
+checkstyleTest{
+    source = 'src/test/java'
 }

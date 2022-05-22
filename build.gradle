@@ -27,6 +27,9 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.6.6'
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.6.6'
 
+    implementation 'junit:junit:4.13.1'
+    testImplementation 'com.h2database:h2:2.1.210'
+
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
 

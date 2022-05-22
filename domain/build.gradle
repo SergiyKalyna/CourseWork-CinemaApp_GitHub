@@ -42,3 +42,11 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+checkstyleMain{
+    source = 'src/main/java'
+}
+
+checkstyleTest{
+    source = 'src/test/java'
+}
