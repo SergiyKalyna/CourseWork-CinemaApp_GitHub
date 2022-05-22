@@ -136,10 +136,10 @@ public class MovieController {
                            @RequestParam("trailer") String trailerLink,
                            @RequestParam("image") MultipartFile multipartFile) {
 
-        MovieCreateDto movie = new MovieCreateDto();
-        setMovieParams(title, description, release, country, genre, actors, trailerLink, multipartFile, movie);
+        MovieCreateDto movieDto = new MovieCreateDto();
+        setMovieParams(title, description, release, country, genre, actors, trailerLink, multipartFile, movieDto);
 
-        movieService.create(movieConverter.convertFromDto(movie));
+        movieService.create(movieConverter.convertFromDto(movieDto));
 
         return "redirect:/movies";
     }
