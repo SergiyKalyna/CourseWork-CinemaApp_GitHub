@@ -88,7 +88,6 @@ public class UserController {
         user.setGender(Gender.valueOf(gender.toUpperCase(Locale.ROOT)));
         user.setBirthdayDate(LocalDate.parse(birthdayDate));
 
-
         userService.updateUser(id, userConverter.convertFromUserDto(user));
         return "redirect:/user/profile";
     }
