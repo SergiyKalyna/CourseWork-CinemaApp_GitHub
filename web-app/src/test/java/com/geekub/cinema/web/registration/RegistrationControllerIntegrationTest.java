@@ -1,6 +1,8 @@
 package com.geekub.cinema.web.registration;
 
 import com.geekhub.models.Gender;
+import com.geekhub.user.User;
+import com.geekhub.user.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
@@ -15,13 +17,19 @@ import org.springframework.util.MultiValueMap;
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @Sql(scripts = "classpath:schema.sql")
 public class RegistrationControllerIntegrationTest {
+
     @Autowired
     private TestRestTemplate restTemplate;
+
+    @Autowired
+    UserService userService;
 
     @Test
     void check_registration_work() {
@@ -47,6 +55,6 @@ public class RegistrationControllerIntegrationTest {
 
         assertThat(response).extracting(ResponseEntity::getStatusCode)
                 .withFailMessage("User is not created")
-                .isEqualTo(HttpStatus.FOUND);
+                .isEqualTo(HttpStatus.OK);
     }
 }
