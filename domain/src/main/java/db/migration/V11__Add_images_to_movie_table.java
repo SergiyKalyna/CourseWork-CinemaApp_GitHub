@@ -5,7 +5,7 @@ import org.flywaydb.core.api.migration.Context;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
-public class V10__Add_images_to_movie_table extends BaseJavaMigration {
+public class V11__Add_images_to_movie_table extends BaseJavaMigration {
 
     public void migrate(Context context) throws Exception {
 

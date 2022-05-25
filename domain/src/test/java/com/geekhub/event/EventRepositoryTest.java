@@ -57,13 +57,13 @@ class EventRepositoryTest {
     @Test
     @DirtiesContext
     void check_result_of_delete() {
-        Event event = new Event(1L, LocalDateTime.now(), 1, 1, 6, 100);
+        Event event = new Event(25L, LocalDateTime.now(), 1, 1, 6, 100);
         eventRepository.addEvent(event);
 
         assertThat(eventRepository.getAllEvents().size()).isEqualTo(1);
         List<Event> events = eventRepository.getAllEvents();
 
-        eventRepository.delete(1L);
+        eventRepository.delete(25L);
 
         assertThat(eventRepository.getAllEvents().size()).isEqualTo(0);
     }
@@ -101,12 +101,12 @@ class EventRepositoryTest {
     @Test
     @DirtiesContext
     void success_found_event() {
-        Event event = new Event(1L, LocalDateTime.now(), 1, 1, 6, 100);
+        Event event = new Event(25L, LocalDateTime.now(), 1, 1, 6, 100);
         eventRepository.addEvent(event);
 
-        Event actualEvent = eventRepository.getEvent(1L);
+        Event actualEvent = eventRepository.getEvent(25L);
 
-        assertThat(actualEvent).extracting(Event::getId).isEqualTo(1L);
+        assertThat(actualEvent).extracting(Event::getId).isEqualTo(25L);
         assertThat(actualEvent).extracting(Event::getTime).isEqualTo(event.getTime());
     }
 
@@ -124,14 +124,14 @@ class EventRepositoryTest {
     @Test
     @DirtiesContext
     void check_update_event_method() {
-        Event event = new Event(1L, LocalDateTime.now(), 1, 1, 6, 100);
+        Event event = new Event(25L, LocalDateTime.now(), 1, 1, 6, 100);
         LocalDateTime updateTime = LocalDateTime.of(2022, 1, 10, 11, 1, 22);
 
         eventRepository.addEvent(event);
         event.setTime(updateTime);
 
-        eventRepository.updateEvent(1L, event);
-        Event updatedEvent = eventRepository.getEvent(1L);
+        eventRepository.updateEvent(25L, event);
+        Event updatedEvent = eventRepository.getEvent(25L);
 
         assertThat(updatedEvent).extracting(Event::getTime).isEqualTo(updateTime);
     }
