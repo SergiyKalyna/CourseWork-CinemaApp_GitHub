@@ -167,4 +167,18 @@ class EventRepositoryTest {
 
         assertThat(eventRepository.getAllByDateTime(date).size()).isEqualTo(1);
     }
+
+    @Test
+    @DirtiesContext
+    void check_result_of_getEventsByHallId() {
+        assertThat(eventRepository.getEventsByHallId(1).size()).isEqualTo(0);
+
+        Event event = new Event(1L, LocalDateTime.now(), 1, 1, 6, 100);
+        Event event1 = new Event(1L, LocalDateTime.of(2022, 1, 10, 11, 1, 22), 1, 1, 6, 100);
+
+        eventRepository.addEvent(event);
+        eventRepository.addEvent(event1);
+
+        assertThat(eventRepository.getEventsByHallId(1).size()).isEqualTo(2);
+    }
 }

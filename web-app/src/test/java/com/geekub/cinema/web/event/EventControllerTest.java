@@ -183,4 +183,20 @@ class EventControllerTest {
 
         verify(eventService).addEvent(eventConverter.convertFromDto(new EventCreationDto()));
     }
+
+    @Test
+    void check_filter_by_hall_events_request() throws Exception {
+        List<EventDto> events = List.of(new EventDto());
+
+        when(eventConverter.convertListToDto(eventService.filterByHall(1))).thenReturn(events);
+
+        mockMvc.perform(get("/events/filterByHall")
+                        .param("hall_id", "1"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+                .andExpect(view().name("event/all-events"))
+                .andExpect(model().attribute("events", events));
+
+        verify(eventConverter).convertListToDto(eventService.filterByHall(1));
+    }
 }

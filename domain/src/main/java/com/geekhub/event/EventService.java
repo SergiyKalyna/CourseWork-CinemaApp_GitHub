@@ -85,7 +85,7 @@ public class EventService {
 
     public List<Event> filterByHall(int hall_id) {
         logger.info("Showed all events filtered by hall");
-        return eventRepository.getEventsByHallName(hall_id);
+        return eventRepository.getEventsByHallId(hall_id);
     }
 
     public List<Event> findEventsByMovieId(int id) {

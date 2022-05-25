@@ -336,6 +336,36 @@ class EventServiceTest {
     }
 
     @Test
+    void filterByHallName_check_call_repository() {
+        List<Event> events = new ArrayList<>();
+        when(eventRepository.getEventsByHallId(1)).thenReturn(events);
+
+        eventService.filterByHall(1);
+
+        verify(eventRepository).getEventsByHallId(1);
+    }
+
+    @Test
+    void filterByHallName_check_result() {
+        List<Event> expected = new ArrayList<>();
+        when(eventRepository.getEventsByHallId(1)).thenReturn(expected);
+
+        List<Event> actual = eventService.filterByHall(1);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void filterByHallName_check_result_size() {
+        List<Event> expected = new ArrayList<>();
+        when(eventRepository.getEventsByHallId(1)).thenReturn(expected);
+
+        List<Event> actual = eventService.filterByHall(1);
+
+        assertEquals(expected.size(), actual.size());
+    }
+
+    @Test
     void update_when_time_is_null() {
         Event event = new Event(1L, null, 1, 1, 40, 100);
 
