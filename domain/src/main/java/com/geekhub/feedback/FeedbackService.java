@@ -39,8 +39,8 @@ public class FeedbackService {
             logger.error("Feedback was not found");
             throw new FeedbackNotFoundException(id);
         } else {
-            logger.info("Was deleted feedback with id - " + id);
             feedbackRepository.delete(id);
+            logger.info("Was deleted feedback with id - " + id);
         }
     }
 
@@ -50,9 +50,9 @@ public class FeedbackService {
             logger.error("Was input empty feedback");
             throw new ValidationException("You can`t leave the empty feedback");
         } else {
-            logger.info("Was added new feedback to movie with id - " + feedback.getMovieId());
             feedbackRepository.create(feedback);
             changeMovieRating(feedback.getMovieId());
+            logger.info("Was added new feedback to movie with id - " + feedback.getMovieId());
         }
     }
 

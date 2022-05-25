@@ -51,7 +51,6 @@ public class MovieController {
     @GetMapping()
     @PreAuthorize("hasRole('USER')")
     public String getAllMoviesFirstPage(Model model, @AuthenticationPrincipal User user) {
-
         return showMovies(1, user, model);
     }
 
@@ -251,7 +250,7 @@ public class MovieController {
         List<MovieDto> movies = movieConverter.convertToListDto(moviePages.getContent());
 
         if (currentPage > totalPages || currentPage <= 0) {
-            throw new MovieNotFoundException("Page index must not be more than total pages!");
+            throw new MovieNotFoundException("Page index must not be more than total pages or less than 0!");
         }
 
         model.addAttribute("currentPage", currentPage);

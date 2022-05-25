@@ -68,4 +68,11 @@ public class EventRepository {
                 .stream()
                 .toList();
     }
+
+    public List<Event> getEventsByHallName(int hallId){
+        return jdbcTemplate.query("SELECT * FROM event WHERE hall_id= :hall_id",
+                        new MapSqlParameterSource("hall_id", hallId), eventRowMapper)
+                .stream()
+                .toList();
+    }
 }

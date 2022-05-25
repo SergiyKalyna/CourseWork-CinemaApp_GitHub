@@ -1,23 +1,15 @@
 package com.geekub.cinema.web.auth;
 
 import com.geekhub.exception.WrongPasswordException;
-import com.geekhub.models.Role;
 import com.geekhub.user.User;
 import com.geekhub.user.UserRepository;
-import com.geekhub.user.UserService;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Component;
-
-import java.util.Collections;
-
-import static java.util.Collections.emptyList;
 
 @Primary
 @Component

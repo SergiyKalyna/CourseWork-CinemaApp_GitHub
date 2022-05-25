@@ -97,6 +97,17 @@ public class EventController {
         return "event/all-events";
     }
 
+    @GetMapping("/filterByHall")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String filterEventByHall(@RequestParam ("hall_id") String hall_id, Model model) {
+        var events = eventConverter.convertListToDto(eventService.filterByHall(Integer.parseInt(hall_id)));
+
+        model.addAttribute("events", events);
+
+        return "event/all-events";
+    }
+
+
     @GetMapping("/create/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public String createEvent(@PathVariable("id") int movieId, Model model) {
