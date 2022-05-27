@@ -58,7 +58,7 @@ public class FeedbackController {
         Feedback feedbackFromDb = feedbackService.getFeedback(id);
         FeedbackCreationDto feedbackDto = feedbackConverter.convertToFeedbackCreationDto(feedbackFromDb);
 
-        if (user.getRole() == Role.ADMIN || user.getId().equals(feedbackFromDb.getUserId())) {
+        if (user.getRole().equals(Role.ADMIN) || user.getId().equals(feedbackFromDb.getUserId())) {
             model.addAttribute("feedback", feedbackDto);
             logger.info("Started operation for edit feedback with id - " + id);
         } else {

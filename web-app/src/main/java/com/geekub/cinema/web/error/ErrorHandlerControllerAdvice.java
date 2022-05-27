@@ -26,7 +26,7 @@ public class ErrorHandlerControllerAdvice extends ResponseEntityExceptionHandler
         ModelAndView mav = new ModelAndView("error");
 
         mav.addObject("message", exception.getMessage());
-        mav.addObject("timestamp", LocalDateTime.now().toString());
+        mav.addObject("timestamp", LocalDateTime.now());
         mav.addObject("url", req.getRequestURL());
         mav.addObject("reason", req.getAttribute(ERROR_MESSAGE));
         mav.addObject("status", req.getAttribute(ERROR_STATUS_CODE));

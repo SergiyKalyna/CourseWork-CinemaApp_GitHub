@@ -28,9 +28,8 @@
         <b>Reason of error:</b> <span th:text="${reason}">Reason of error:</span>
     </p>
 
-    <div th:if="${ex} or ${exception} or (${message} and ${message.length() != 0})" class="mb-3">
-        <b>Cause:</b> <span th:if="${ex}" th:text="${ex}">exception ...</span>
-        <span th:if="${exception}" th:text="${exception}">exception ...</span>
+    <div th:if="(${message} and ${message.length() != 0})" class="mb-3">
+        <b>Cause:</b>
         <span th:if="${message} and ${message.length() != 0}"
               th:text="${message}">message ...</span>
     </div>

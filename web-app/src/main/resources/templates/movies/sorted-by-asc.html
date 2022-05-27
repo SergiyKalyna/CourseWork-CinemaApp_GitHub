@@ -124,24 +124,19 @@
         </div>
         <div class="col-7">
             <footer style="font-size: large" class="panel-footer">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link" th:if="${currentPage}>1"
-                                                 th:href="@{/movies/sorted-by-ASC-date/{pageNumber}(pageNumber=${pageNumber}-1)}">Previous</a>
-                            &nbsp; &nbsp;
-                        </li>
-                        <span th:each="pageNumber: ${#numbers.sequence(1, totalPages)}">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" th:if="${currentPage}>1"
+                                             th:href="@{/movies/sorted-by-ASC-date/{pageNumber}(pageNumber=${pageNumber}-1)}">Previous</a>
+                    </li>
+                    <span th:each="pageNumber: ${#numbers.sequence(1, totalPages)}">
                     <li class="page-item"><a class="page-link"
                                              th:href="@{/movies/sorted-by-ASC-date/{pageNumber}(pageNumber=${pageNumber})}">[[${pageNumber}]]</a>
-                 &nbsp; &nbsp;
                     </li>
                          </span>
-                        <li class="page-item"><a class="page-link" th:if="${currentPage}<${totalPages}"
-                                                 th:href="@{/movies/sorted-by-ASC-date/{pageNumber}(pageNumber=${currentPage}+1)}">Next</a>
-                            &nbsp; &nbsp;
-                        </li>
-                    </ul>
-                </nav>
+                    <li class="page-item"><a class="page-link" th:if="${currentPage}<${totalPages}"
+                                             th:href="@{/movies/sorted-by-ASC-date/{pageNumber}(pageNumber=${currentPage}+1)}">Next</a>
+                    </li>
+                </ul>
             </footer>
         </div>
     </div>

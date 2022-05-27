@@ -50,7 +50,6 @@
             transform: scale(1.1);
         }
 
-
         .star-rating label::before {
             content: '\2606';
             position: absolute;
@@ -60,13 +59,6 @@
 
         .star-rating input:checked ~ label:before {
             content: '\2605';
-        }
-
-        @-moz-document url-prefix() {
-            .star-rating input:checked ~ label:before {
-                font-size: 36px;
-                line-height: 21px;
-            }
         }
     </style>
 
