@@ -159,7 +159,6 @@ class EventControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("event/create"))
-                .andExpect(model().attribute("event", new EventCreationDto()))
                 .andExpect(model().attribute("movie", movie))
                 .andExpect(model().attribute("dateTimeNow", localDateTimeNow));
 

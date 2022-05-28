@@ -104,8 +104,7 @@ class HallControllerTest {
         mockMvc.perform(get("/halls/create").with(user("admin").password("password").roles("ADMIN")))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
-                .andExpect(view().name("hall/create"))
-                .andExpect(model().attribute("cinemaHall", new CinemaHallDto()));
+                .andExpect(view().name("hall/create"));
     }
 
     @Test
