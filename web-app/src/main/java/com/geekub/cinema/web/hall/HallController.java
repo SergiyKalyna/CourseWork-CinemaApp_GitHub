@@ -61,7 +61,7 @@ public class HallController {
 
     @GetMapping("/create")
     @PreAuthorize("hasRole('ADMIN')")
-    public String createHall(@ModelAttribute("cinemaHall") CinemaHallDto cinemaHall) {
+    public String createHall() {
         logger.info("Started operation to create hall");
 
         return "hall/create";
