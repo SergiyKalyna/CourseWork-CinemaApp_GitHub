@@ -112,10 +112,10 @@ class EventConverterTest {
         when(movieService.show(event.getMovieId())).thenReturn(movie);
         when(cinemaHallService.getHall(event.getCinemaHallId())).thenReturn(cinemaHall);
 
-        List<EventDto> dtos = eventConverter.convertListToDto(events);
+        List<EventDto> eventsDto = eventConverter.convertListToDto(events);
 
-        assertNotNull(dtos);
-        assertEquals(1, dtos.size());
-        assertThat(dtos.get(0).getId()).isEqualTo(event.getId());
+        assertNotNull(eventsDto);
+        assertEquals(1, eventsDto.size());
+        assertThat(eventsDto.get(0).getId()).isEqualTo(event.getId());
     }
 }

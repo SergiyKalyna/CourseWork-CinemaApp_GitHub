@@ -38,20 +38,20 @@ public class EventControllerIntegrationTest {
     }
 
     private void create() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
         parameters.add("placeCost", "100");
         parameters.add("cinemaHallId", "1");
         parameters.add("time", String.valueOf(LocalDateTime.now()));
 
-        EventCreationDto eventCreationDto = new EventCreationDto();
-        eventCreationDto.setPlaceCost(Integer.parseInt(parameters.getFirst("placeCost")));
-        eventCreationDto.setCinemaHallId(Integer.parseInt(parameters.getFirst("cinemaHallId")));
-        eventCreationDto.setTime(LocalDateTime.parse(parameters.getFirst("time")));
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(parameters, headers);
 
-        ResponseEntity<EventCreationDto> response = restTemplate.postForEntity(
+        ResponseEntity<String> response = restTemplate.postForEntity(
                 "/events/add/{id}",
-                eventCreationDto,
-                EventCreationDto.class,
+                request,
+                String.class,
                 1
         );
 

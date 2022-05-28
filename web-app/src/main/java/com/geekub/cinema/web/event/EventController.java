@@ -48,9 +48,9 @@ public class EventController {
 
     @PostMapping("/{id}/delete")
     @PreAuthorize("hasRole('ADMIN')")
-    public String deleteEvent(@PathVariable("id") String id) {
-        eventService.deleteEvent(Long.valueOf(id));
-        ticketBookingService.deleteByEventId(Long.valueOf(id));
+    public String deleteEvent(@PathVariable("id") Long id) {
+        eventService.deleteEvent(id);
+        ticketBookingService.deleteByEventId(id);
 
         return "redirect:/events";
     }
@@ -99,8 +99,8 @@ public class EventController {
 
     @GetMapping("/filterByHall")
     @PreAuthorize("hasRole('ADMIN')")
-    public String filterEventByHall(@RequestParam ("hall_id") String hall_id, Model model) {
-        var events = eventConverter.convertListToDto(eventService.filterByHall(Integer.parseInt(hall_id)));
+    public String filterEventByHall(@RequestParam ("hall_id") String hallId, Model model) {
+        var events = eventConverter.convertListToDto(eventService.filterByHall(Integer.parseInt(hallId)));
 
         model.addAttribute("events", events);
 
@@ -114,7 +114,6 @@ public class EventController {
         LocalDateTime localDateTimeNow = LocalDateTime.of(LocalDate.now(),
                 LocalTime.of(LocalTime.now().getHour(), LocalTime.now().getMinute(), 0));
 
-        model.addAttribute("event", new EventCreationDto());
         model.addAttribute("movie", movieConverter.convertToDto(movieService.show(movieId)));
         model.addAttribute("dateTimeNow", localDateTimeNow);
 

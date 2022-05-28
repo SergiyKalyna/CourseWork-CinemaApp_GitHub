@@ -15,12 +15,12 @@
         <h1 th:text="${movie.getTitle()}">Title</h1>
         </p>
     </div>
-    <form th:method="POST" th:action="@{/events/add/{id}/(id=${movie.getId()})}" th:object="${event}">
+    <form th:method="POST" th:action="@{/events/add/{id}/(id=${movie.getId()})}">
 
         <div class="form-group my-3">
-            <label  for="placeCost" class="form-label"> Cost of the place: </label>
-            <input type="number" th:field="*{placeCost}" id="placeCost" class="form-control" placeholder="price value"
-                   required min="50" max="300"/>
+            <label for="placeCost" class="form-label"> Cost of the place: </label>
+            <input type="number" id="placeCost" name="placeCost" class="form-control"
+                   placeholder="price value" required min="50" max="300"/>
         </div>
 
         <div class="form-group my-3">

@@ -83,14 +83,17 @@ public class EventService {
                 .collect(Collectors.toList());
     }
 
-    public List<Event> filterByHall(int hall_id) {
+    public List<Event> filterByHall(int hallId) {
         logger.info("Showed all events filtered by hall");
-        return eventRepository.getEventsByHallId(hall_id);
+        return eventRepository.getEventsByHallId(hallId);
     }
 
     public List<Event> findEventsByMovieId(int id) {
         List<Event> events = eventRepository.findEventsByMovieId(id);
-        List<Event> filteredEvents = events.stream().filter(event -> event.getFreePlace() > 1).collect(Collectors.toList());
+        List<Event> filteredEvents = events
+                .stream()
+                .filter(event -> event.getFreePlace() > 0)
+                .collect(Collectors.toList());
 
         logger.info("Showed all events by movie with id -" + id);
 
