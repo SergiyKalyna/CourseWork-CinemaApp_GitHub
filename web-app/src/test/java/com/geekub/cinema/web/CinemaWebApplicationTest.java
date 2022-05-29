@@ -11,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-@Sql(scripts = "classpath:schema.sql")
 class CinemaWebApplicationTest {
 
     @Test
