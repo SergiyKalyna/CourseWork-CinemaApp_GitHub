@@ -98,7 +98,8 @@
                             <div style="text-align: center;">
                                 <div class="card mb-4 box-shadow">
                                     <div style="text-align: center;">
-                                        <img th:src="${'data:image/jpeg;charset=utf-8;base64,'+ movie.getImageFile}" alt="" th:width="250" th:height="360"
+                                        <img th:src="${'data:image/jpeg;charset=utf-8;base64,'+ movie.getImageFile}"
+                                             alt="" th:width="250" th:height="360"
                                              style="max-width: 100%;"/>
                                     </div>
                                     <div class="card-body">
@@ -124,24 +125,25 @@
         </div>
         <div class="col-7">
             <footer style="font-size: large" class="panel-footer">
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link" th:if="${currentPage}>1"
-                                                 th:href="@{/movies/page/{pageNumber}(pageNumber=${pageNumber}-1)}">Previous</a>
-                        </li>
-                        <span th:each="pageNumber: ${#numbers.sequence(1, totalPages)}">
-                    <li class="page-item"><a class="page-link"
-                                             th:href="@{/movies/page/{pageNumber}(pageNumber=${pageNumber})}">[[${pageNumber}]]</a>
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" th:if="${currentPage}>1"
+                           th:href="@{/movies/page/{pageNumber}(pageNumber=${currentPage}-1)}">Previous</a>
                     </li>
-                </span>
-                        <li class="page-item"><a class="page-link" th:if="${currentPage}<${totalPages}"
-                                                 th:href="@{/movies/page/{pageNumber}(pageNumber=${currentPage}+1)}">Next</a>
-                        </li>
-                    </ul>
+                    <span th:each="pageNumber: ${#numbers.sequence(1, totalPages)}">
+                    <li class="page-item">
+                        <a class="page-link"
+                           th:href="@{/movies/page/{pageNumber}(pageNumber=${pageNumber})}">[[${pageNumber}]]</a>
+                    </li>
+                    </span>
+                    <li class="page-item">
+                        <a class="page-link" th:if="${currentPage}<${totalPages}"
+                           th:href="@{/movies/page/{pageNumber}(pageNumber=${currentPage}+1)}">Next</a>
+                    </li>
+                </ul>
             </footer>
         </div>
     </div>
-
-
 </div>
 </body>
 </html>

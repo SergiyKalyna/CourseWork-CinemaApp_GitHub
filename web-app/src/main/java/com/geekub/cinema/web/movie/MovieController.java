@@ -4,7 +4,6 @@ package com.geekub.cinema.web.movie;
 import com.geekhub.exception.MovieNotFoundException;
 import com.geekhub.feedback.FeedbackConverter;
 import com.geekhub.feedback.FeedbackService;
-import com.geekhub.feedback.dto.FeedbackCreationDto;
 import com.geekhub.feedback.dto.FeedbackDto;
 import com.geekhub.models.Genre;
 import com.geekhub.models.Production;
@@ -68,7 +67,6 @@ public class MovieController {
     @PreAuthorize("hasRole('USER')")
     public String showMovie(@AuthenticationPrincipal User user,
                             @PathVariable("id") int id,
-                            @ModelAttribute("newFeedback") FeedbackCreationDto feedback,
                             Model model) {
         List<FeedbackDto> feedbacks =
                 feedbackConverter.convertToListDto(feedbackService.showAllByFilmId(id));
@@ -119,7 +117,7 @@ public class MovieController {
 
     @GetMapping("/create-movie")
     @PreAuthorize("hasRole('ADMIN')")
-    public String createMovie(@ModelAttribute("movie") MovieCreateDto movie) {
+    public String createMovie() {
         logger.info("Started operation of add new movie");
         return "movies/create";
     }

@@ -124,19 +124,22 @@
         </div>
         <div class="col-7">
             <footer style="font-size: large" class="panel-footer">
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link" th:if="${currentPage}>1"
-                                                 th:href="@{/movies/sorted-by-rating/{pageNumber}(pageNumber=${pageNumber}-1)}">Previous</a>
-                        </li>
-                        <span th:each="pageNumber: ${#numbers.sequence(1, totalPages)}">
-                    <li class="page-item"><a class="page-link"
-                                             th:href="@{/movies/sorted-by-rating/{pageNumber}(pageNumber=${pageNumber})}">[[${pageNumber}]]</a>
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" th:if="${currentPage}>1"
+                           th:href="@{/movies/sorted-by-rating/{pageNumber}(pageNumber=${currentPage}-1)}">Previous</a>
+                    </li>
+                    <span th:each="pageNumber: ${#numbers.sequence(1, totalPages)}">
+                    <li class="page-item">
+                        <a class="page-link"
+                           th:href="@{/movies/sorted-by-rating/{pageNumber}(pageNumber=${pageNumber})}">[[${pageNumber}]]</a>
                     </li>
                 </span>
-                        <li class="page-item"><a class="page-link" th:if="${currentPage}<${totalPages}"
-                                                 th:href="@{/movies/sorted-by-rating/{pageNumber}(pageNumber=${currentPage}+1)}">Next</a>
-                        </li>
-                    </ul>
+                    <li class="page-item">
+                        <a class="page-link" th:if="${currentPage}<${totalPages}"
+                           th:href="@{/movies/sorted-by-rating/{pageNumber}(pageNumber=${currentPage}+1)}">Next</a>
+                    </li>
+                </ul>
             </footer>
         </div>
     </div>

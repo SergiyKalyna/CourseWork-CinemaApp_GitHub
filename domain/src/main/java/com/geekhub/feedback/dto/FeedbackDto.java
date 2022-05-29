@@ -1,6 +1,5 @@
 package com.geekhub.feedback.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

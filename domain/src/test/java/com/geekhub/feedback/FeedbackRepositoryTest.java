@@ -147,5 +147,4 @@ class FeedbackRepositoryTest {
 
         assertThat(updatedFeedback).extracting(Feedback::getFeedback).isEqualTo(newFeedback);
     }
-
 }

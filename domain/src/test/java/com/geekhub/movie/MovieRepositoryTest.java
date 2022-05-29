@@ -242,17 +242,4 @@ class MovieRepositoryTest {
         assertThat(movies.get(1)).extracting(Movie::getId).isEqualTo(9);
         assertThat(movies.get(2)).extracting(Movie::getId).isEqualTo(10);
     }
-
-    @Test
-    @DirtiesContext
-    void check_return_image_bytes() {
-        Movie movie = new Movie(9, "TITLE", Genre.COMEDY, "description", LocalDate.now(),
-                Production.USA, List.of("actors"), "trailer", 9, new byte[100]);
-
-        movieRepository.create(movie);
-
-        byte[] bytes = movieRepository.getImage(9);
-
-        assertThat(bytes).isEqualTo(movie.getImage());
-    }
 }

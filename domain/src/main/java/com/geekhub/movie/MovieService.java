@@ -105,14 +105,6 @@ public class MovieService {
         return movieRepository.showAllLastMovie();
     }
 
-    public byte[] getImageBytes(int movieId) {
-        if (movieRepository.show(movieId) == null) {
-            throw new MovieNotFoundException(movieId);
-        }
-
-        return movieRepository.getImage(movieId);
-    }
-
     private Page<Movie> showMoviesPage(Pageable pageable, List<Movie> movies) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();

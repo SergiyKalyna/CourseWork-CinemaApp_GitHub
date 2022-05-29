@@ -72,13 +72,13 @@ public class FeedbackController {
     public String updateFeedback(@PathVariable("id") Long id,
                                  @RequestParam("feedback") String feedback,
                                  @RequestParam("stars") String rating) {
-        FeedbackCreationDto dto =
+        FeedbackCreationDto feedbackDto =
                 feedbackConverter.convertToFeedbackCreationDto(feedbackService.getFeedback(id));
-        dto.setMovieScore(Integer.parseInt(rating));
-        dto.setFeedback(feedback);
+        feedbackDto.setMovieScore(Integer.parseInt(rating));
+        feedbackDto.setFeedback(feedback);
 
-        feedbackService.update(id, feedbackConverter.convertFromDto(dto));
+        feedbackService.update(id, feedbackConverter.convertFromDto(feedbackDto));
 
-        return "redirect:/movies/" + dto.getMovieId();
+        return "redirect:/movies/" + feedbackDto.getMovieId();
     }
 }

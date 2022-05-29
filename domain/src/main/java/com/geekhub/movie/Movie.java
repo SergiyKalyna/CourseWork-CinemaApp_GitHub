@@ -40,19 +40,6 @@ public class Movie {
         this.image = image;
     }
 
-    public Movie(int id, String title, Genre genre, String description, LocalDate release, Production country, List<String> actors, String imageFile, String trailer, int averageRating) {
-        this.id = id;
-        this.title = title;
-        this.genre = genre;
-        this.description = description;
-        this.release = release;
-        this.country = country;
-        this.actors = actors;
-        this.imageFile = imageFile;
-        this.trailer = trailer;
-        this.averageRating = averageRating;
-    }
-
     public Movie(int id, String title, Genre genre, String description, LocalDate release, Production country, List<String> actors, String trailer, int averageRating, byte[] image) {
         this.id = id;
         this.title = title;
@@ -64,5 +51,18 @@ public class Movie {
         this.trailer = trailer;
         this.averageRating = averageRating;
         this.image = image;
+    }
+
+    public Movie(int id, String title, Genre genre, String description, LocalDate release, Production country, List<String> actors, String imageFile, String trailer, int averageRating) {
+        this.id = id;
+        this.title = title;
+        this.genre = genre;
+        this.description = description;
+        this.release = release;
+        this.country = country;
+        this.actors = actors;
+        this.imageFile = imageFile;
+        this.trailer = trailer;
+        this.averageRating = averageRating;
     }
 }

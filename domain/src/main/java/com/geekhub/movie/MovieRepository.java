@@ -81,10 +81,4 @@ public class MovieRepository {
                 .stream()
                 .toList();
     }
-
-    public byte[] getImage(int movieId) {
-        return jdbcTemplate.queryForObject("SELECT image FROM movie WHERE id= :id",
-                new MapSqlParameterSource("id", movieId),
-                (rs, rowNum) -> rs.getBytes("image"));
-    }
 }
