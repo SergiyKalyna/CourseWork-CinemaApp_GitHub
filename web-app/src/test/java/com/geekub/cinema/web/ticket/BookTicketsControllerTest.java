@@ -142,6 +142,5 @@ class BookTicketsControllerTest {
 
         mockMvc.perform(get("/tickets/1/download"))
                 .andExpect(status().isOk());
-
     }
 }

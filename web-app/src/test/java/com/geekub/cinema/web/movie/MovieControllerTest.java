@@ -204,8 +204,7 @@ class MovieControllerTest {
         mockMvc.perform(get("/movies/create-movie"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
-                .andExpect(view().name("movies/create"))
-                .andExpect(model().attribute("movie", new MovieCreateDto()));
+                .andExpect(view().name("movies/create"));
     }
 
     @Test
