@@ -51,7 +51,7 @@
             </form>
         </tr>
     </table>
-    <a href="" th:href="@{/movies/}" class="btn btn-secondary mt-5"><- Return to movies menu</a>
+    <a href="" th:href="@{/movies/{id}(id=${movie.getId()})}" class="btn btn-secondary mt-5"><- Return to movie</a>
 </div>
 </body>
 </html>
