@@ -46,16 +46,6 @@ public class MovieRepository {
                 "rating= :rating, image= :image WHERE id= :id", movieRowMapper.getParametersForUpdate(id, updatedMovie));
     }
 
-//    public List<Movie> search(String keyWord) {
-//        String keyword1 = keyWord.substring(0, 1).toUpperCase() + keyWord.substring(1);
-//
-//        return jdbcTemplate.query("SELECT * FROM movie WHERE title LIKE '%" + keyWord + "%' OR title LIKE '%" +
-//                        keyword1 + "%' OR title LIKE '%" + keyWord.toUpperCase() + "%' OR title LIKE '%" +
-//                        keyWord.toLowerCase() + "%'", movieRowMapper)
-//                .stream()
-//                .toList();
-//    }
-
     public List<Movie> search(String keyWord) {
 
         return jdbcTemplate.query("SELECT * FROM movie WHERE title ILIKE '%" + keyWord + "%'",
